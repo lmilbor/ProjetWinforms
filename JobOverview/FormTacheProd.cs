@@ -45,7 +45,8 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
-            Temp = DALTache.GetListePersonne();
+            TempData.ListePersonne = DALTache.GetListePersonne();
+            _listePersonne = TempData.ListePersonne;
             _listeLogiciel = DALLogiciel.GetListLogiciel();
             cbLogiciel.DataSource = _listeLogiciel.Select(a => a.Nom).OrderBy(b => b).ToList();
             cbVersion.DataSource = _listeLogiciel.Where(a => a.Nom == (cbLogiciel.SelectedValue).ToString()).First()
