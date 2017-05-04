@@ -13,8 +13,8 @@ namespace JobOverview
     public partial class FormLogiciel : Form
     {
         private BindingList<Logiciel> _listeLogiciels;
-        private List<Version> _AjouterVersion;
-        private List<Version> _SupprimerVersion;
+        private BindingList<Version> _AjouterVersion;
+        private BindingList<Version> _SupprimerVersion;
         public FormLogiciel()
         {
             InitializeComponent();
@@ -73,8 +73,8 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
-            _AjouterVersion = new List<Version>();
-            _SupprimerVersion = new List<Version>();
+            _AjouterVersion = new BindingList<Version>();
+            _SupprimerVersion = new BindingList<Version>();
             TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
             _listeLogiciels = TempData.ListeLogiciel;
             cbLogiciel.DataSource = _listeLogiciels;

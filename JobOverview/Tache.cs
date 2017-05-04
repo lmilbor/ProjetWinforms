@@ -14,7 +14,7 @@ namespace JobOverview
         //Si Annexe = 0, il s'agit d'une tache de production, 
         //sinon il s'agit d'une tache annexe
         public bool EstAnnexe { get; set; }
-        public string LibelleActivite { get; set; }
+        public Activité Activite { get; set; }
         public string Description { get; set; }
     }
 

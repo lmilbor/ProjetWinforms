@@ -84,9 +84,67 @@ namespace JobOverview
             return listePersonne;
         }
 
-        //public static List<Activité> GetListeActivite()
-        //{
+        static public BindingList<Activité> GetListeActivite()
+        {
+            var listeActivite = new BindingList<Activité>();
+            string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+            string queryString = @"select * from jo.Activite";
 
-        //}
+            using (var connect = new SqlConnection(connectString))
+            {
+                var command = new SqlCommand(queryString, connect);
+                connect.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    GetListeActiviteFromDataReader(listeActivite, reader);
+                }
+            }
+            return listeActivite;
+        }
+
+        static public BindingList<Activité> GetListeActiviteFromDataReader(BindingList<Activité> ListeActivite, SqlDataReader reader)
+        {
+            while (reader.Read())
+            {
+                var activ = new Activité();
+                activ.CodeActivite = (string)reader["CodeActivite"];
+                activ.Libelle = (string)reader["Libelle"];
+                activ.Annexe = (bool)reader["Annexe"];
+                ListeActivite.Add(activ); 
+            }
+            return ListeActivite;
+        }
+
+        static public BindingList<Module> GetListeModule()
+        {
+            var listeModule = new BindingList<Module>();
+            string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+            string queryString = @"select * from jo.Module";
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                var command = new SqlCommand(queryString, connect);
+                connect.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    GetListeModuleFromDataReader(listeModule, reader);
+                }
+            }
+            return listeModule;
+        }
+
+        static public BindingList<Module> GetListeModuleFromDataReader(BindingList<Module> ListeModule, SqlDataReader reader)
+        {
+            while (reader.Read())
+            {
+                var module = new Module();
+                module.CodeModule = (string)reader["CodeModule"];
+                module.Libellé = (string)reader["Libelle"];
+                ListeModule.Add(module);
+            }
+            return ListeModule;
+        }
     }
 }
