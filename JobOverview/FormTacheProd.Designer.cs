@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.cmbPersonne = new System.Windows.Forms.ComboBox();
+            this.cbPersonne = new System.Windows.Forms.ComboBox();
             this.cbLogiciel = new System.Windows.Forms.ComboBox();
             this.cbVersion = new System.Windows.Forms.ComboBox();
             this.btnAjout = new System.Windows.Forms.Button();
@@ -43,13 +43,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvTacheProd)).BeginInit();
             this.SuspendLayout();
             // 
-            // cmbPersonne
+            // cbPersonne
             // 
-            this.cmbPersonne.FormattingEnabled = true;
-            this.cmbPersonne.Location = new System.Drawing.Point(12, 29);
-            this.cmbPersonne.Name = "cmbPersonne";
-            this.cmbPersonne.Size = new System.Drawing.Size(121, 21);
-            this.cmbPersonne.TabIndex = 0;
+            this.cbPersonne.FormattingEnabled = true;
+            this.cbPersonne.Location = new System.Drawing.Point(12, 29);
+            this.cbPersonne.Name = "cbPersonne";
+            this.cbPersonne.Size = new System.Drawing.Size(121, 21);
+            this.cbPersonne.TabIndex = 0;
             // 
             // cbLogiciel
             // 
@@ -86,15 +86,16 @@
             this.dgvTacheProd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvTacheProd.Location = new System.Drawing.Point(149, 29);
             this.dgvTacheProd.Name = "dgvTacheProd";
-            this.dgvTacheProd.Size = new System.Drawing.Size(585, 289);
+            this.dgvTacheProd.Size = new System.Drawing.Size(406, 289);
             this.dgvTacheProd.TabIndex = 3;
             // 
             // tbDescripTache
             // 
-            this.tbDescripTache.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbDescripTache.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDescripTache.Location = new System.Drawing.Point(215, 322);
             this.tbDescripTache.Name = "tbDescripTache";
-            this.tbDescripTache.Size = new System.Drawing.Size(519, 20);
+            this.tbDescripTache.Size = new System.Drawing.Size(340, 20);
             this.tbDescripTache.TabIndex = 4;
             // 
             // btnEnregistrer
@@ -137,7 +138,8 @@
             // 
             // lblDescrip
             // 
-            this.lblDescrip.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDescrip.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblDescrip.AutoSize = true;
             this.lblDescrip.Location = new System.Drawing.Point(149, 325);
             this.lblDescrip.Name = "lblDescrip";
@@ -158,7 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 349);
+            this.ClientSize = new System.Drawing.Size(564, 349);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblDescrip);
@@ -170,7 +172,7 @@
             this.Controls.Add(this.btnAjout);
             this.Controls.Add(this.cbVersion);
             this.Controls.Add(this.cbLogiciel);
-            this.Controls.Add(this.cmbPersonne);
+            this.Controls.Add(this.cbPersonne);
             this.Name = "FormTacheProd";
             this.Text = "FormTacheProd";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTacheProd)).EndInit();
@@ -181,7 +183,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox cmbPersonne;
+        private System.Windows.Forms.ComboBox cbPersonne;
         private System.Windows.Forms.ComboBox cbLogiciel;
         private System.Windows.Forms.ComboBox cbVersion;
         private System.Windows.Forms.Button btnAjout;

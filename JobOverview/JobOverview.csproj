@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activité.cs" />
     <Compile Include="DALLogiciel.cs" />
     <Compile Include="DALTache.cs" />
     <Compile Include="FormConnection.cs">

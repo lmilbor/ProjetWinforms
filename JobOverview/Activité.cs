@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace JobOverview
 {
-    class Module
+    class Activité
     {
-        public string CodeModule { get; set; }
-        public string CodeLogiciel { get; set; }
+        public string CodeActivite { get; set; }
         public string Libelle { get; set; }
+        public bool Annexe { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace JobOverview
 {
     public class Tache
     {
-        public string IdTache { get; set; }
+        public Guid IdTache { get; set; }
         public string Libelle { get; set; }
 
         //Si Annexe = 0, il s'agit d'une tache de production, 

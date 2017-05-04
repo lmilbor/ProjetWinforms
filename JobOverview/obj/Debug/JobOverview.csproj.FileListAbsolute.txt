@@ -23,3 +23,4 @@ D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.cspro
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.exe
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.pdb
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormLogiciel.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormLogiciel.resources
