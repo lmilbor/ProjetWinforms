@@ -13,6 +13,7 @@ namespace JobOverview
     public partial class FormSaisieVersion : Form
     {
         public Version version { get; set; }
+        public string Nom { get; set; }
         public FormSaisieVersion()
         {
             InitializeComponent();
@@ -36,7 +37,8 @@ namespace JobOverview
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            version.NumeroVersion = TempData.ListeLogiciel.Where(l => l.Nom == cbLogiciel.SelectedText).First().ListeVersions.Count + 1;
+            Nom = cbLogiciel.SelectedText;
+            version.NumeroVersion = TempData.ListeLogiciel.Where(l => l.Nom == Nom).First().ListeVersions.Count + 1;
             version.DateOuverture = DateTime.Parse(mtbDateOuverture.Text);
             version.DateSortiePrevue = DateTime.Parse(mtbDateSortie.Text);
             version.Millesime = (short)version.DateSortiePrevue.Year;

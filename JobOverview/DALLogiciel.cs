@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,9 +14,9 @@ namespace JobOverview
         /// Retourne la liste de logiciel dpuis la base de donnée.
         /// </summary>
         /// <returns></returns>
-        static public List<Logiciel> GetListLogiciel()
+        static public BindingList<Logiciel> GetListLogiciel()
         {
-            List<Logiciel> listeLogiciel = new List<Logiciel>();
+            BindingList<Logiciel> listeLogiciel = new BindingList<Logiciel>();
 
             var connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string sqlQuery = @"SELECT l.CodeLogiciel as CodeLogiciel, l.Nom as Nom,
@@ -45,7 +46,7 @@ namespace JobOverview
         /// </summary>
         /// <param name="listeLogiciel">La liste de logiciel à remplir.</param>
         /// <param name="reader">Le reader servant à remplir la liste</param>
-        static private void GetListLogicielFromReader(List<Logiciel> listeLogiciel, SqlDataReader reader)
+        static private void GetListLogicielFromReader(BindingList<Logiciel> listeLogiciel, SqlDataReader reader)
         {
             while (reader.Read())
             {
