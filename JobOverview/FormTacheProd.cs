@@ -12,8 +12,8 @@ namespace JobOverview
 {
     public partial class FormTacheProd : Form
     {
-        private List<Personne> _listePersonne;
-        private List<Logiciel> _listeLogiciel;
+        private BindingList<Personne> _listePersonne;
+        private BindingList<Logiciel> _listeLogiciel;
         public FormTacheProd()
         {
             InitializeComponent();

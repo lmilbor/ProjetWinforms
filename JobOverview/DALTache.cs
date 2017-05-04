@@ -83,9 +83,9 @@ namespace JobOverview
             return listePersonne;
         }
 
-        public static List<Activité> GetListeActivite()
-        {
+        //public static List<Activité> GetListeActivite()
+        //{
 
-        }
+        //}
     }
 }
