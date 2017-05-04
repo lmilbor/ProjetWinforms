@@ -22,19 +22,13 @@ namespace JobOverview
 
         private void BtnNewVersion_Click(object sender, EventArgs e)
         {
-            using (var form = new FormSaisieProduit())
+            using (var form = new FormConnexion())
             {
                 form.ShowDialog();
                 if (form.DialogResult.Equals(DialogResult.OK))
                 {
-                    _produitsAjoutés.Add(form.ProduitSaisi);
-                    _listeProduit.Add(form.ProduitSaisi);
-
+                    _listeLogiciels.Where( l => l.Nom == ).Add(form.);
                 }
-            }
-            using (var form = new FormConnexion())
-            {
-                form.ShowDialog();
             }
         }
 
