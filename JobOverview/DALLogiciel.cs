@@ -12,7 +12,7 @@ namespace JobOverview
     static public class DALLogiciel
     {
         /// <summary>
-        /// Retourne la liste de logiciel dpuis la base de donnée.
+        /// Retourne la liste de logiciel depuis la base de données.
         /// </summary>
         /// <returns></returns>
         static public BindingList<Logiciel> GetListLogiciel()

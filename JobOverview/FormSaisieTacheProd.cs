@@ -12,17 +12,22 @@ namespace JobOverview
 {
     public partial class FormSaisieTacheProd : Form
     {
+
+        #region Champs privés
         private BindingList<Logiciel> _listeLogiciel;
         private BindingList<Personne> _listePersonne;
         private BindingList<Activité> _listeActiviteProd;
         private BindingList<Module> _listeModule;
+        #endregion
 
+        #region Propriétés public
         public TacheProd TacheProd { get; set; }
         public Version Version { get; set; }
         public Logiciel Logiciel { get; set; }
         public Module Module { get; set; }
         public Activité Activite { get; set; }
-        public Personne Pers { get; set; }
+        public Personne Pers { get; set; } 
+        #endregion
 
 
         public FormSaisieTacheProd()
@@ -51,31 +56,47 @@ namespace JobOverview
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            // Initialisation des propriétées
             TacheProd = new TacheProd();
             Activite = new Activité();
             Module = new Module();
             Version = new Version();
             Logiciel = new Logiciel();
             TacheProd.IdTache = new Guid();
+
+            // Renseignement de chaque champs des taches de production
             if(!string.IsNullOrWhiteSpace(rtbDescription.Text))
                 TacheProd.Description = rtbDescription.Text;
+
             string tempString = mtbDureePrevue.Text.Replace(",", "");
             if (!string.IsNullOrWhiteSpace(tempString))
                 TacheProd.DureePrevue = float.Parse(mtbDureePrevue.Text);
+            else
+                MessageBox.Show("Le champs Durée Prévue ne peut pas rester vide");
 
             tempString = mtbDureeRestante.Text.Replace(",", "");
             if (!string.IsNullOrWhiteSpace(tempString))
                 TacheProd.DureeRestanteEstimee = float.Parse(mtbDureeRestante.Text);
+            else
+                MessageBox.Show("Le champs Durée Restante Estimée ne peut pas rester vide");
+
             if (!string.IsNullOrWhiteSpace(tbLibelle.Text))
                 TacheProd.Libelle = tbLibelle.Text;
+            else
+                MessageBox.Show("Le champs Libellé ne peut pas rester vide");
+
+            if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
+                TacheProd.Numero = int.Parse(mtbNumero.Text);
+            else
+                MessageBox.Show("Le champs Numéro ne peut pas rester vide");
+
             Pers.Nom = cbPersonne.Text;
             Activite.Libelle = cbActivite.Text;
             Activite.Annexe = false;
             Module.Libellé = cbModule.Text;
             Version.NumeroVersion = float.Parse(cbVersion.Text);
             Logiciel.Nom = cbLogiciel.Text;
-            if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
-                TacheProd.Numero = int.Parse(mtbNumero.Text);
+
             base.OnClosing(e);
         }
 

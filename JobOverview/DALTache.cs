@@ -5,15 +5,22 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace JobOverview
 {
     static public class DALTache
     {
+        /// <summary>
+        /// Retourne la liste des personnes depuis la base de données.
+        /// </summary>
+        /// <returns></returns>
         static public BindingList<Personne> GetListePersonne()
         {
             var listePersonne = new BindingList<Personne>();
+            // Création d'un string pour stocker la chaine de connection
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+            // Création d'un string pour stocker la requete SQL
             string queryString = @"Select P.Login, P.Nom, P.Prenom, T.IdTache, T.Libelle, T.Annexe As EstAnnexe, A.Libelle As LibelleActivite, 
                                    T.Description, TP.Numero, TP.DureePrevue, TP.DureeRestanteEstimee, 
                                    M.Libelle As Module, L.Nom As Logiciel, V.NumeroVersion
@@ -28,6 +35,7 @@ namespace JobOverview
 
             using (var connect = new SqlConnection(connectString))
             {
+                // Instanciation de la commande grace à la chaine de connexion et la requête SQL
                 var command = new SqlCommand(queryString, connect);
                 connect.Open();
 
@@ -39,15 +47,24 @@ namespace JobOverview
             return listePersonne;
         }
 
+        /// <summary>
+        /// Remplit la liste de personne avec les données récupérées par le reader.
+        /// </summary>
+        /// <param name="listePersonne"></param>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         static public BindingList<Personne> GetListePersonneFromReader(BindingList<Personne> listePersonne, SqlDataReader reader)
         {
             while (reader.Read())
             {
+                // Stock le login de la personne traitée
                 string loginPersonne = (string)reader["Login"];
                 Personne personne = new Personne();
 
+                // Si la liste est vide ou que la dernière personne entré est la même que celle traité 
                 if (listePersonne.Count == 0 || listePersonne[listePersonne.Count - 1].Login != loginPersonne)
                 {
+                    // Création d'une nouvelle instance Personne
                     personne.Login = (string)reader["Login"];
                     personne.Nom = (string)reader["Nom"];
                     personne.Prenom = (string)reader["Prenom"];
@@ -56,19 +73,23 @@ namespace JobOverview
                     listePersonne.Add(personne);
                 }
                 else
+                    // Sinon, on reprend la dernière personne créée
                     personne = listePersonne[listePersonne.Count - 1];
 
+                // Stock le booléen decrivant le type de tache
                 bool estAnnexe = (bool)reader["EstAnnexe"];
+
+                // Création d'une nouvelle tache
                 var tache = new Tache();
-
-
                 tache.IdTache = (Guid)reader["IdTache"];
                 tache.Libelle = (string)reader["Libelle"];
                 tache.EstAnnexe = (bool)reader["EstAnnexe"];
                 tache.Description = (string)reader["Description"];
 
+                // Si c'est une tache de production
                 if (!estAnnexe)
                 {
+                    // Transtypage de la tache en tache de production
                     ((TacheProd)tache).Numero = (int)reader["Numero"];
                     ((TacheProd)tache).DureePrevue = (float)reader["DureePrevue"];
                     ((TacheProd)tache).DureeRestanteEstimee = (float)reader["DureeRestanteEstimee"];
@@ -84,6 +105,10 @@ namespace JobOverview
             return listePersonne;
         }
 
+        /// <summary>
+        /// Retourne la liste des activités depuis la base de données.
+        /// </summary>
+        /// <returns></returns>
         static public BindingList<Activité> GetListeActivite()
         {
             var listeActivite = new BindingList<Activité>();
@@ -103,6 +128,12 @@ namespace JobOverview
             return listeActivite;
         }
 
+        /// <summary>
+        /// Remplit la liste des activités avec les données récupérées par le reader.
+        /// </summary>
+        /// <param name="ListeActivite"></param>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         static public BindingList<Activité> GetListeActiviteFromDataReader(BindingList<Activité> ListeActivite, SqlDataReader reader)
         {
             while (reader.Read())
@@ -116,6 +147,10 @@ namespace JobOverview
             return ListeActivite;
         }
 
+        /// <summary>
+        /// Retourne la liste des modules depuis la base de données.
+        /// </summary>
+        /// <returns></returns>
         static public BindingList<Module> GetListeModule()
         {
             var listeModule = new BindingList<Module>();
@@ -135,6 +170,12 @@ namespace JobOverview
             return listeModule;
         }
 
+        /// <summary>
+        /// Remplit la liste des modules avec les données récupérées par le reader.
+        /// </summary>
+        /// <param name="ListeModule"></param>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         static public BindingList<Module> GetListeModuleFromDataReader(BindingList<Module> ListeModule, SqlDataReader reader)
         {
             while (reader.Read())
@@ -146,5 +187,127 @@ namespace JobOverview
             }
             return ListeModule;
         }
+
+        public static void InsertTacheProd(BindingList<TacheProd> ListeTacheProd)
+        {
+            //Création d'une chaine de connection
+            string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+
+            //Création d'un string correspondant à la requête SQL
+            string queryString = @"INSERT TacheProd (IdTache, Libelle, EstAnnexe, CodeActivite, Description, Numero, DureePrevue, DureeRestanteEstimee, CodeModule, NumeroVersion, CodeLogiciel)
+SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, DureeRestanteEstimee, Module, Version, Logiciel FROM @MaTable";
+
+            //Création du paramètre de la requete SQL
+            var param = new SqlParameter("@MaTable", SqlDbType.Structured);
+
+            //Appelle de la méthode gérant la création de la table intermédiaire
+            DataTable tableProd = GetDataTableProduit(ListeTacheProd);
+            param.TypeName = "TypeTableTacheProd";
+            param.Value = tableProd;
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                connect.Open();
+                SqlTransaction tran = connect.BeginTransaction();
+
+                try
+                {
+                    var command = new SqlCommand(queryString, connect, tran);
+                    command.Parameters.Add(param);
+                    command.ExecuteNonQuery();
+
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    tran.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public static DataTable GetDataTableProduit(BindingList<TacheProd> ListeTacheProd)
+        {
+            //Création d'une table mémoire
+            DataTable table = new DataTable();
+
+            //Création des différentes colonnes
+            //Colonne IdTache
+            var colNom = new DataColumn("IdTache", typeof(Guid));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Libelle
+            colNom = new DataColumn("Libelle", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne EstAnnexe
+            colNom = new DataColumn("EstAnnexe", typeof(bool));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Activité
+            colNom = new DataColumn("Activité", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Description
+            table.Columns.Add(new DataColumn("Description", typeof(string)));
+
+            //Colonne Numero
+            colNom = new DataColumn("Numero", typeof(int));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Durée Prévue
+            colNom = new DataColumn("DureePrevue", typeof(float));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Durée Restante Estimée
+            colNom = new DataColumn("DureeRestanteEstimee", typeof(float));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Module
+            colNom = new DataColumn("Module", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Version
+            colNom = new DataColumn("Version", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Logiciel
+            colNom = new DataColumn("Logiciel", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+
+            foreach (var p in ListeTacheProd)
+            {
+                //Création de chaque ligne de la table, si la valeur est null
+                //alors on écrit une valeur null dans la table de type SQL
+                DataRow ligne = table.NewRow();
+                ligne["IdTache"] = p.IdTache;
+                ligne["Libelle"] = p.Libelle;
+                ligne["EstAnnexe"] = p.EstAnnexe;
+                if (p.Description != null) ligne["Description"] = p.Description;
+                else ligne["Description"] = DBNull.Value;
+                ligne["Numero"] = p.Numero;
+                ligne["DureePrevue"] = p.DureePrevue;
+                ligne["DureeRestanteEstimee"] = p.DureeRestanteEstimee;
+                ligne["Module"] = p.Numero;
+                ligne["Version"] = p.DureePrevue;
+                ligne["Logiciel"] = p.DureeRestanteEstimee;
+
+                //Ajout de ligne dans la table
+                table.Rows.Add(ligne);
+            }
+            return table;
+        }
+
     }
 }
