@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/JobOverviewWin/v14
+/JobOverview/bin/Debug
+/JobOverview/obj/Debug
