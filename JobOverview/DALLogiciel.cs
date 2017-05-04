@@ -79,7 +79,7 @@ namespace JobOverview
                 version.Millesime = (short)reader["Millesime"];
                 version.NumeroVersion = (float)reader["NumeroVersion"];
                 version.LastNumeroRelease = (short)reader["NumeroRelease"];
-                if (logiciel.ListeVersions.Count == 0 || logiciel.ListeVersions.Last().NumeroVersion != version.NumeroVersion)
+                if (logiciel.ListeVersions.Count == 0 || !(logiciel.ListeVersions.Contains<Version>(version)))
                     logiciel.ListeVersions.Add(version);
 
                 #endregion
