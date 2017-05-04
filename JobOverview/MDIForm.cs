@@ -23,10 +23,13 @@ namespace JobOverview
         }
         protected override void OnLoad(EventArgs e)
         {
-            using (var form = new FormConnexion())
-            {
-                form.ShowDialog();
-            }
+            //if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ConnectionStringJobOverview))
+            //{
+                using (var form = new FormConnexion())
+                {
+                    form.ShowDialog();
+                } 
+            //}
             base.OnLoad(e);
         }
 

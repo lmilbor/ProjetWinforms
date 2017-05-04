@@ -16,14 +16,25 @@ namespace JobOverview
         public FormLogiciel()
         {
             InitializeComponent();
+            cbLogiciel.SelectionChangeCommitted += CbLogiciel_SelectionChangeCommitted;
         }
+
+        private void CbLogiciel_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            dgvVersion.DataSource = _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().
+                ListeVersions;
+            dgvModule.DataSource = _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().
+                ListeModules;
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             _listeLogiciels = DALLogiciel.GetListLogiciel();
             cbLogiciel.DataSource = _listeLogiciels;
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
-            dgvVersion.DataSource = _listeLogiciels.Where( l => l.CodeLogiciel == cbLogiciel.SelectedText).First().ListeVersions.ToList();
+            dgvVersion.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == _listeLogiciels.First().CodeLogiciel).First().ListeVersions;
+            dgvModule.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == _listeLogiciels.First().CodeLogiciel).First().ListeModules;
             base.OnLoad(e);
         }
     }

@@ -63,6 +63,7 @@ namespace JobOverview
                     logiciel.CodeLogiciel = (string)reader["CodeLogiciel"];
                     logiciel.Nom = (string)reader["Nom"];
                     logiciel.ListeVersions = new List<Version>();
+                    logiciel.ListeModules = new List<Module>();
                     listeLogiciel.Add(logiciel);
                 }
                 else
@@ -74,33 +75,24 @@ namespace JobOverview
 
                 // On remplit la version en cours du logiciel en cours
 
-                float numeroVersion = (float)reader["NumeroVersion"];
-
-                Version version = null;
-
-                if (logiciel.ListeVersions.Count == 0 ||
-                    logiciel.ListeVersions[logiciel.ListeVersions.Count - 1].NumeroVersion != numeroVersion)
-                {
-                    version = new Version();
-                    version.Millesime = (short)reader["Millesime"];
-                    version.NumeroVersion = (float)reader["NumeroVersion"];
-                    version.LastNumeroRelease = (short)reader["NumeroRelease"];
-                    version.ListeModules = new List<Module>();
+                Version version = new Version();
+                version.Millesime = (short)reader["Millesime"];
+                version.NumeroVersion = (float)reader["NumeroVersion"];
+                version.LastNumeroRelease = (short)reader["NumeroRelease"];
+                if (logiciel.ListeVersions.Count == 0 || logiciel.ListeVersions.Last().NumeroVersion != version.NumeroVersion)
                     logiciel.ListeVersions.Add(version);
-                }
-                else
-                    version = logiciel.ListeVersions[logiciel.ListeVersions.Count - 1];
 
                 #endregion
 
                 #region Remplissage du module
 
-                // On remplit le module en cours de la version en cours
+                // On remplit le module en cours du logiciel en cours
 
                 Module module = new Module();
                 module.CodeModule = (string)reader["CodeModule"];
                 module.Libellé = (string)reader["Libelle"];
-                version.ListeModules.Add(module);
+                if (logiciel.ListeModules.Count == 0 || !(logiciel.ListeModules.Contains<Module>(module)))
+                    logiciel.ListeModules.Add(module);
 
                 #endregion
             }

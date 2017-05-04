@@ -99,6 +99,9 @@
     <EmbeddedResource Include="FormConnection.resx">
       <DependentUpon>FormConnection.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormLogiciel.resx">
+      <DependentUpon>FormLogiciel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSaisieTacheProd.resx">
       <DependentUpon>FormSaisieTacheProd.cs</DependentUpon>
     </EmbeddedResource>

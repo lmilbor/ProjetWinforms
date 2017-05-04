@@ -34,10 +34,11 @@
             this.btnEnregister = new System.Windows.Forms.Button();
             this.lblLogiciel = new System.Windows.Forms.Label();
             this.dgvVersion = new System.Windows.Forms.DataGridView();
-            this.lbModule = new System.Windows.Forms.ListBox();
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblModule = new System.Windows.Forms.Label();
+            this.dgvModule = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVersion)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvModule)).BeginInit();
             this.SuspendLayout();
             // 
             // cbLogiciel
@@ -93,21 +94,10 @@
             this.dgvVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.dgvVersion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVersion.Location = new System.Drawing.Point(135, 31);
+            this.dgvVersion.Location = new System.Drawing.Point(150, 31);
             this.dgvVersion.Name = "dgvVersion";
-            this.dgvVersion.Size = new System.Drawing.Size(203, 381);
+            this.dgvVersion.Size = new System.Drawing.Size(358, 411);
             this.dgvVersion.TabIndex = 5;
-            // 
-            // lbModule
-            // 
-            this.lbModule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbModule.FormattingEnabled = true;
-            this.lbModule.Location = new System.Drawing.Point(344, 31);
-            this.lbModule.Name = "lbModule";
-            this.lbModule.Size = new System.Drawing.Size(323, 381);
-            this.lbModule.TabIndex = 6;
             // 
             // lblVersion
             // 
@@ -123,20 +113,31 @@
             // 
             this.lblModule.AutoSize = true;
             this.lblModule.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModule.Location = new System.Drawing.Point(341, 9);
+            this.lblModule.Location = new System.Drawing.Point(528, 11);
             this.lblModule.Name = "lblModule";
             this.lblModule.Size = new System.Drawing.Size(61, 17);
             this.lblModule.TabIndex = 8;
             this.lblModule.Text = "Modules";
             // 
+            // dgvModule
+            // 
+            this.dgvModule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvModule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvModule.Location = new System.Drawing.Point(514, 31);
+            this.dgvModule.Name = "dgvModule";
+            this.dgvModule.Size = new System.Drawing.Size(481, 411);
+            this.dgvModule.TabIndex = 9;
+            // 
             // FormLogiciel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 416);
+            this.ClientSize = new System.Drawing.Size(1005, 446);
+            this.Controls.Add(this.dgvModule);
             this.Controls.Add(this.lblModule);
             this.Controls.Add(this.lblVersion);
-            this.Controls.Add(this.lbModule);
             this.Controls.Add(this.dgvVersion);
             this.Controls.Add(this.lblLogiciel);
             this.Controls.Add(this.btnEnregister);
@@ -146,6 +147,7 @@
             this.Name = "FormLogiciel";
             this.Text = "FormGestionLogiciel";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVersion)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvModule)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,8 +161,8 @@
         private System.Windows.Forms.Button btnEnregister;
         private System.Windows.Forms.Label lblLogiciel;
         private System.Windows.Forms.DataGridView dgvVersion;
-        private System.Windows.Forms.ListBox lbModule;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Label lblModule;
+        private System.Windows.Forms.DataGridView dgvModule;
     }
 }

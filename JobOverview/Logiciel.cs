@@ -11,5 +11,6 @@ namespace JobOverview
         public string CodeLogiciel { get; set; }
         public string Nom { get; set; }
         public List<Version> ListeVersions { get; set; }
+        public List<Module> ListeModules { get; set; }
     }
 }
