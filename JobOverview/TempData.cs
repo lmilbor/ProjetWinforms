@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace JobOverview
 {
-    class Module
+    static public class TempData
     {
-        public string CodeModule { get; set; }
-        public string CodeLogiciel { get; set; }
-        public string Libelle { get; set; }
+        static public List<Personne> istePersonne { get; set; }
+        static public List<Logiciel> ListeLogiciel { get; set; }
+
     }
 }
