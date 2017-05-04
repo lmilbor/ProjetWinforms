@@ -11,21 +11,20 @@ namespace JobOverview
         public string UniqueIdentifier { get; set; }
         public string Libelle { get; set; }
 
-        // Si Annexe = 0, il s'agit d'une tache de production, 
+        //Si Annexe = 0, il s'agit d'une tache de production, 
         //sinon il s'agit d'une tache annexe
         public bool EstAnnexe { get; set; }
         public string LibelleActivite { get; set; }
         public string Description { get; set; }
     }
 
-    public class TacheProd
+    public class TacheProd : Tache
     {
         public int Numero { get; set; }
         public float DureePrevue { get; set; }
         public float DureeRestanteEstimee { get; set; }
-        public string CodeModule { get; set; }
-        public string CodeLogicielModule { get; set; }
-        public float NumeroVersion { get; set; }
-        public string CodeLogicielVersion { get; set; }
+        public Module Module { get; set; }
+        public Version Version { get; set; }
+        public Logiciel Logiciel { get; set; }
     }
 }
