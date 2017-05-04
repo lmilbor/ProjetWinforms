@@ -29,7 +29,8 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
-            _listeLogiciels = DALLogiciel.GetListLogiciel();
+            TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
+            _listeLogiciels = TempData.ListeLogiciel;
             cbLogiciel.DataSource = _listeLogiciels;
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
