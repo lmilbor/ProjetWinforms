@@ -11,5 +11,6 @@ namespace JobOverview
         public float NumeroVersion { get; set; }
         public short Millesime { get; set; }
         public List<Module> ListeModules { get; set; }
+        public short LastNumeroRelease { get; set; }
     }
 }

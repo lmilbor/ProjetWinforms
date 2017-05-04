@@ -18,11 +18,15 @@ namespace JobOverview
             List<Logiciel> listeLogiciel = new List<Logiciel>();
 
             var connectString = Properties.Settings.Default.ConnectionStringJobOverview;
-            string sqlQuery = @"SELECT l.CodeLogiciel as CodeLogiciel, l.Nom as Nom, v.Millesime as Millesime,
-                                v.NumeroVersion as NumeroVersion, m.CodeModule as CodeModule, m.Libelle as Libelle
+            string sqlQuery = @"SELECT l.CodeLogiciel as CodeLogiciel, l.Nom as Nom,
+                                v.Millesime as Millesime, v.NumeroVersion as NumeroVersion,
+                                r.NumeroRelease as NumeroRelease,
+                                m.CodeModule as CodeModule, m.Libelle as Libelle
                                 FROM jo.Logiciel l
                                 INNER JOIN jo.Version v ON v.CodeLogiciel = l.CodeLogiciel
-                                INNER JOIN jo.Module m ON m.CodeLogiciel = l.CodeLogiciel";
+                                INNER JOIN jo.Module m ON m.CodeLogiciel = l.CodeLogiciel
+                                INNER JOIN jo.Release r ON r.NumeroVersion = v.NumeroVersion
+                                ORDER BY r.DateSetup DESC";
             using (var connect = new SqlConnection(connectString))
             {
                 var command = new SqlCommand(sqlQuery, connect);
@@ -80,6 +84,7 @@ namespace JobOverview
                     version = new Version();
                     version.Millesime = (short)reader["Millesime"];
                     version.NumeroVersion = (float)reader["NumeroVersion"];
+                    version.LastNumeroRelease = (short)reader["NumeroRelease"];
                     version.ListeModules = new List<Module>();
                     logiciel.ListeVersions.Add(version);
                 }

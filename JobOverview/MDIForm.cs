@@ -17,9 +17,17 @@ namespace JobOverview
 			// TODO : Branchement des menus
 			// menu1.Click += (object sender, EventArgs e) => ShowChild("MDIApp.Form1");
 		}
+        protected override void OnLoad(EventArgs e)
+        {
+            using (var form = new FormConnexion())
+            {
+                form.ShowDialog();
+            }
+            base.OnLoad(e);
+        }
 
-		// Affichage d'une fenêtre fille
-		private void ShowChild(string name)
+        // Affichage d'une fenêtre fille
+        private void ShowChild(string name)
 		{
 			// Dans la collection des fenêtres filles, on recherche une fenêtre
 			// dont le nom correspond à celui passé en paramètre...
@@ -67,6 +75,5 @@ namespace JobOverview
 			menuWindows.DropDownItems.RemoveByKey(f.Name);
 			if (ChildForms.Count == 0) menuWindows.Visible = false;
 		}
-
-	}
+    }
 }
