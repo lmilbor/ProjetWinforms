@@ -15,8 +15,12 @@ namespace JobOverview
 			ChildForms = new Dictionary<string, Form>();
 
 			// TODO : Branchement des menus
-			// menu1.Click += (object sender, EventArgs e) => ShowChild("MDIApp.Form1");
-		}
+			menuLogiciel.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormLogiciel");
+            menuTacheProd.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormTacheProd");
+            menuTachesAnnexes.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormSaisieTacheAnnexe");
+            menuVerifTemps.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormVerifTemps");
+            //menuEchange.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormEchange");
+        }
         protected override void OnLoad(EventArgs e)
         {
             using (var form = new FormConnexion())

@@ -1,0 +1,1 @@
+Data Source=LMILBOR17-DE\IP08R2;Initial Catalog=WinFormJobPverview;Integrated Security=True
