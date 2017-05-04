@@ -12,29 +12,34 @@ namespace JobOverview
 {
     public partial class FormLogiciel : Form
     {
-        private List<Logiciel> _listeLogiciels;
+        private BindingList<Logiciel> _listeLogiciels;
+        private List<Version> _AjouterVersion;
+        private List<Version> _SupprimerVersion;
         public FormLogiciel()
         {
             InitializeComponent();
             cbLogiciel.SelectionChangeCommitted += CbLogiciel_SelectionChangeCommitted;
             btnNewVersion.Click += BtnNewVersion_Click;
+            btnSupVersion.Click += BtnSupVersion_Click;
+        }
+
+        private void BtnSupVersion_Click(object sender, EventArgs e)
+        {
+            Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
+            _SupprimerVersion.Add(version);
+            _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().ListeVersions.Remove(version);
         }
 
         private void BtnNewVersion_Click(object sender, EventArgs e)
         {
-            using (var form = new FormSaisieProduit())
+            using (var form = new FormSaisieVersion())
             {
                 form.ShowDialog();
                 if (form.DialogResult.Equals(DialogResult.OK))
                 {
-                    _produitsAjoutés.Add(form.ProduitSaisi);
-                    _listeProduit.Add(form.ProduitSaisi);
-
+                    _listeLogiciels.Where( l => l.Nom == form.Nom).First().ListeVersions.Add(form.version);
+                    _AjouterVersion.Add(form.version);
                 }
-            }
-            using (var form = new FormConnexion())
-            {
-                form.ShowDialog();
             }
         }
 
@@ -48,6 +53,8 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
+            _AjouterVersion = new List<Version>();
+            _SupprimerVersion = new List<Version>();
             TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
             _listeLogiciels = TempData.ListeLogiciel;
             cbLogiciel.DataSource = _listeLogiciels;

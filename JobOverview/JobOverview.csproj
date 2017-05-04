@@ -72,6 +72,12 @@
     <Compile Include="FormSaisieTacheProd.Designer.cs">
       <DependentUpon>FormSaisieTacheProd.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSaisieVersion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSaisieVersion.Designer.cs">
+      <DependentUpon>FormSaisieVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTacheProd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -106,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSaisieTacheProd.resx">
       <DependentUpon>FormSaisieTacheProd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSaisieVersion.resx">
+      <DependentUpon>FormSaisieVersion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTacheProd.resx">
       <DependentUpon>FormTacheProd.cs</DependentUpon>
