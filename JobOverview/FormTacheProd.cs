@@ -12,6 +12,7 @@ namespace JobOverview
 {
     public partial class FormTacheProd : Form
     {
+        public List<Personne> ListePersonne { get; set; }
         public FormTacheProd()
         {
             InitializeComponent();
