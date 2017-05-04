@@ -17,6 +17,25 @@ namespace JobOverview
         {
             InitializeComponent();
             cbLogiciel.SelectionChangeCommitted += CbLogiciel_SelectionChangeCommitted;
+            btnNewVersion.Click += BtnNewVersion_Click;
+        }
+
+        private void BtnNewVersion_Click(object sender, EventArgs e)
+        {
+            using (var form = new FormSaisieProduit())
+            {
+                form.ShowDialog();
+                if (form.DialogResult.Equals(DialogResult.OK))
+                {
+                    _produitsAjoutés.Add(form.ProduitSaisi);
+                    _listeProduit.Add(form.ProduitSaisi);
+
+                }
+            }
+            using (var form = new FormConnexion())
+            {
+                form.ShowDialog();
+            }
         }
 
         private void CbLogiciel_SelectionChangeCommitted(object sender, EventArgs e)
