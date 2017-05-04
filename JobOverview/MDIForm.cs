@@ -6,8 +6,8 @@ namespace JobOverview
 {
 	public partial class MDIForm : Form
 	{
-		// Collection des fenêtres filles
-		public Dictionary<string, Form> ChildForms { get; private set; }
+        // Collection des fenêtres filles
+        public Dictionary<string, Form> ChildForms { get; private set; }
 
 		public MDIForm()
 		{
