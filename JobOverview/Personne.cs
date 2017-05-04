@@ -11,9 +11,7 @@ namespace JobOverview
         public string Login { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
-        public string CodeEquipe { get; set; }
-        public string CodeMetier { get; set; }
         public List<TacheProd> ListeTacheProd { get; set; }
-        public List<Tache> ListeAnnexe { get; set; }
+        public List<Tache> ListeTacheAnnexe { get; set; }
     }
 }
