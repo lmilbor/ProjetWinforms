@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JobOverview
 {
-    class Activité
+    public class Activité
     {
         public string CodeActivite { get; set; }
         public string Libelle { get; set; }
