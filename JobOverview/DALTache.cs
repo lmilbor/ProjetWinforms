@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,9 @@ namespace JobOverview
 {
     static public class DALTache
     {
-        static public List<Personne> GetListePersonne()
+        static public BindingList<Personne> GetListePersonne()
         {
-            var listePersonne = new List<Personne>();
+            var listePersonne = new BindingList<Personne>();
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string queryString = @"Select P.Login, P.Nom, P.Prenom, T.IdTache, T.Libelle, T.Annexe As EstAnnexe, A.Libelle As LibelleActivite, 
                                    T.Description, TP.Numero, TP.DureePrevue, TP.DureeRestanteEstimee, 
@@ -38,7 +39,7 @@ namespace JobOverview
             return listePersonne;
         }
 
-        static public List<Personne> GetListePersonneFromReader(List<Personne> listePersonne, SqlDataReader reader)
+        static public BindingList<Personne> GetListePersonneFromReader(BindingList<Personne> listePersonne, SqlDataReader reader)
         {
             while (reader.Read())
             {
@@ -83,9 +84,9 @@ namespace JobOverview
             return listePersonne;
         }
 
-        static public List<Activité> GetListeActivite()
+        static public BindingList<Activité> GetListeActivite()
         {
-            var listeActivite = new List<Activité>();
+            var listeActivite = new BindingList<Activité>();
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string queryString = @"select * from jo.Activite";
 
@@ -102,7 +103,7 @@ namespace JobOverview
             return listeActivite;
         }
 
-        static public List<Activité> GetListeActiviteFromDataReader(List<Activité> ListeActivite, SqlDataReader reader)
+        static public BindingList<Activité> GetListeActiviteFromDataReader(BindingList<Activité> ListeActivite, SqlDataReader reader)
         {
             while (reader.Read())
             {
@@ -115,9 +116,9 @@ namespace JobOverview
             return ListeActivite;
         }
 
-        static public List<Module> GetListeModule()
+        static public BindingList<Module> GetListeModule()
         {
-            var listeModule = new List<Module>();
+            var listeModule = new BindingList<Module>();
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string queryString = @"select * from jo.Module";
 
@@ -134,6 +135,16 @@ namespace JobOverview
             return listeModule;
         }
 
+        static public BindingList<Module> GetListeModuleFromDataReader(BindingList<Module> ListeModule, SqlDataReader reader)
+        {
+            while (reader.Read())
+            {
+                var module = new Module();
+                module.CodeModule = (string)reader["CodeModule"];
+                module.Libellé = (string)reader["Libelle"];
+                ListeModule.Add(module);
+            }
+            return ListeModule;
         }
     }
 }

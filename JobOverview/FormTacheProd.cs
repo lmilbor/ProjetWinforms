@@ -18,16 +18,29 @@ namespace JobOverview
         {
             InitializeComponent();
             cbPersonne.SelectionChangeCommitted += CbPersonne_SelectionChangeCommitted;
-            btnAjout.Click += (object sender, EventArgs e) =>  new FormSaisieTacheProd().ShowDialog();
+            btnAjout.Click += BtnAjout_Click;
+        }
+
+        private void BtnAjout_Click(object sender, EventArgs e)
+        {
+            using (var form = new FormSaisieTacheProd())
+            {
+                DialogResult dr = form.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    form.TacheProd.Version = form.Version;
+                    form.TacheProd.Logiciel = form.Logiciel;
+                    form.TacheProd.Module = form.Module;
+                    form.TacheProd.Activite = form.Activite;
+                    _listePersonne.Where(b => b.Nom == (form.Pers.Nom).ToString()).FirstOrDefault().ListeTacheProd.Add(form.TacheProd);
+                    MiseAJourForm();
+                }
+            }
         }
 
         private void CbPersonne_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            dgvTacheProd.DataSource = _listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First().ListeTacheProd
-                .Where(b => (b.Logiciel.Nom == (cbLogiciel.SelectedValue).ToString()) && (b.Version.NumeroVersion == (float)cbVersion.SelectedValue));
-
-            tbDescripTache.Text = (_listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First()
-                .ListeTacheProd.Select(b => b.Description)).FirstOrDefault();
+            MiseAJourForm();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -38,19 +51,28 @@ namespace JobOverview
             cbVersion.DataSource = _listeLogiciel.Where(a => a.Nom == (cbLogiciel.SelectedValue).ToString()).First()
                 .ListeVersions.Select(b => b.NumeroVersion).OrderBy(c => c).ToList();
             cbPersonne.DataSource = _listePersonne.Select(a => a.Nom).OrderBy(b => b).Distinct().ToList();
-            dgvTacheProd.DataSource = _listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First().ListeTacheProd;
-            #region Rendre invisible certaine colonne
-            dgvTacheProd.Columns[1].Visible = false;
-            dgvTacheProd.Columns[2].Visible = false;
-            dgvTacheProd.Columns[3].Visible = false;
-            dgvTacheProd.Columns[4].Visible = false;
-            dgvTacheProd.Columns[5].Visible = false;
-            dgvTacheProd.Columns[6].Visible = false;
-            dgvTacheProd.Columns[8].Visible = false;
-            dgvTacheProd.Columns[9].Visible = false;
-            dgvTacheProd.Columns[10].Visible = false; 
-            #endregion
+            MiseAJourForm();
             base.OnLoad(e); 
+        }
+
+        public void MiseAJourForm()
+        {
+            dgvTacheProd.DataSource = _listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First().ListeTacheProd
+            .Where(b => (b.Logiciel.Nom == (cbLogiciel.SelectedValue).ToString()) && (b.Version.NumeroVersion == (float)cbVersion.SelectedValue)).ToList();
+
+            dgvTacheProd.Columns["DureePrevue"].Visible = false;
+            dgvTacheProd.Columns["DureeRestanteEstimee"].Visible = false;
+            dgvTacheProd.Columns["Version"].Visible = false;
+            dgvTacheProd.Columns["Logiciel"].Visible = false;
+            dgvTacheProd.Columns["Module"].Visible = false;
+            dgvTacheProd.Columns["Description"].Visible = false;
+            dgvTacheProd.Columns["EstAnnexe"].Visible = false;
+            dgvTacheProd.Columns["Activite"].Visible = false;
+            dgvTacheProd.Columns["IdTache"].Visible = false;
+
+            tbDescripTache.Text = (_listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First()
+                .ListeTacheProd.Select(b => b.Description)).FirstOrDefault();
+
         }
     }
 }
