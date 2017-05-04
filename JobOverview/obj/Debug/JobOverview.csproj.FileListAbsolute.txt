@@ -1,2 +1,13 @@
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\bin\Debug\JobOverview.exe.config
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\bin\Debug\JobOverview.exe.config
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\bin\Debug\JobOverview.exe
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\bin\Debug\JobOverview.pdb
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.csprojResolveAssemblyReference.cache
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormConnexion.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieTacheProd.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormTacheProd.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.MDIForm.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.Properties.Resources.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.csproj.GenerateResource.Cache
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.exe
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.pdb

@@ -3,15 +3,5 @@
 ################################################################################
 
 /.vs/JobOverviewWin/v14
-/JobOverview/obj/Debug/JobOverview.Properties.Resources.resources
-/JobOverview/obj/Debug/JobOverview.pdb
-/JobOverview/obj/Debug/JobOverview.MDIForm.resources
-/JobOverview/obj/Debug/JobOverview.FormTacheProd.resources
-/JobOverview/obj/Debug/JobOverview.FormSaisieTacheProd.resources
-/JobOverview/obj/Debug/JobOverview.FormConnexion.resources
-/JobOverview/obj/Debug/JobOverview.exe
-/JobOverview/obj/Debug/JobOverview.csprojResolveAssemblyReference.cache
-/JobOverview/obj/Debug/JobOverview.csproj.GenerateResource.Cache
+/JobOverview/bin/Debug
 /JobOverview/obj/Debug
-/JobOverview/bin/Debug/JobOverview.pdb
-/JobOverview/bin/Debug/JobOverview.exe
