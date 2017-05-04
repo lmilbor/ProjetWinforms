@@ -41,7 +41,6 @@ namespace JobOverview
         {
             while (reader.Read())
             {
-                if ()
                 var personne = new Personne();
                 personne.Login = (string)reader["Login"];
                 personne.Nom = (string)reader["Nom"];
