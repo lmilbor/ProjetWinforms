@@ -17,8 +17,6 @@ namespace JobOverview
         public FormSaisieTacheProd()
         {
             InitializeComponent();
-
-       
         }
 
         protected override void OnLoad(EventArgs e)
