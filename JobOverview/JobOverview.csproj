@@ -47,6 +47,36 @@
   <ItemGroup>
     <Compile Include="DALLogiciel.cs" />
     <Compile Include="DALTache.cs" />
+    <Compile Include="FormLogiciel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogiciel.Designer.cs">
+      <DependentUpon>FormLogiciel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSaisieTacheAnnexe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSaisieTacheAnnexe.Designer.cs">
+      <DependentUpon>FormSaisieTacheAnnexe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSaisieTacheProd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSaisieTacheProd.Designer.cs">
+      <DependentUpon>FormSaisieTacheProd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTacheProd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTacheProd.Designer.cs">
+      <DependentUpon>FormTacheProd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormVerifTemps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormVerifTemps.Designer.cs">
+      <DependentUpon>FormVerifTemps.cs</DependentUpon>
+    </Compile>
     <Compile Include="MDIForm.cs">
       <SubType>Form</SubType>
     </Compile>
