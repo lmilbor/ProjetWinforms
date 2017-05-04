@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -9,9 +10,9 @@ namespace JobOverview
 {
     static public class DALTache
     {
-        static public List<Personne> GetListePersonne()
+        static public BindingList<Personne> GetListePersonne()
         {
-            var listePersonne = new List<Personne>();
+            var listePersonne = new BindingList<Personne>();
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string queryString = @"Select P.Login, P.Nom, P.Prenom, T.IdTache, T.Libelle, T.Annexe As EstAnnexe, A.Libelle As LibelleActivite, 
                                    T.Description, TP.Numero, TP.DureePrevue, TP.DureeRestanteEstimee, 
@@ -38,7 +39,7 @@ namespace JobOverview
             return listePersonne;
         }
 
-        static public List<Personne> GetListePersonneFromReader(List<Personne> listePersonne, SqlDataReader reader)
+        static public BindingList<Personne> GetListePersonneFromReader(BindingList<Personne> listePersonne, SqlDataReader reader)
         {
             while (reader.Read())
             {

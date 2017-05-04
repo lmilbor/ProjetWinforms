@@ -27,8 +27,11 @@ namespace JobOverview
             //{
                 using (var form = new FormConnexion())
                 {
+                do
+                {
                     form.ShowDialog();
-                } 
+                } while (string.IsNullOrWhiteSpace(form.CahineDeConnexion));
+                }
             //}
             base.OnLoad(e);
         }

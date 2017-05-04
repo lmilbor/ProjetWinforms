@@ -12,17 +12,26 @@ namespace JobOverview
 {
     public partial class FormConnexion : Form
     {
+        public string CahineDeConnexion { get; set; }
         public FormConnexion()
         {
             InitializeComponent();
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (DialogResult.Equals(DialogResult.OK))
+            if (!string.IsNullOrWhiteSpace(tbConnection.Text))
             {
-                Properties.Settings.Default.ConnectionStringJobOverview = tbConnection.Text;
+                if (DialogResult.Equals(DialogResult.OK))
+                {
+                    CahineDeConnexion = tbConnection.Text;
+                    Properties.Settings.Default.ConnectionStringJobOverview = tbConnection.Text;
+                }
+                base.OnClosing(e);
             }
-            base.OnClosing(e);
+            else
+            {
+                MessageBox.Show("Entrez une chaine de connexion avant de continuer.");
+            }
         }
     }
 }

@@ -16,32 +16,26 @@ namespace JobOverview
         public string Nom { get; set; }
         public FormSaisieVersion()
         {
+            version = new Version();
             InitializeComponent();
             btnOK.Click += BtnOK_Click;
-            mtbDateSortie.TextChanged += MtbDateSortie_TextChanged;
         }
-
-        private void MtbDateSortie_TextChanged(object sender, EventArgs e)
-        {
-            lblMillesime.Text = DateTime.Parse(mtbDateSortie.Text).Year.ToString();
-        }
-
         protected override void OnLoad(EventArgs e)
         {
             cbLogiciel.DataSource = TempData.ListeLogiciel;
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
-            lblresNumVersion.Text = (TempData.ListeLogiciel.Where( l => l.Nom == cbLogiciel.SelectedText).First().ListeVersions.Count + 1).ToString();
             base.OnLoad(e);
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            Nom = cbLogiciel.SelectedText;
-            version.NumeroVersion = TempData.ListeLogiciel.Where(l => l.Nom == Nom).First().ListeVersions.Count + 1;
+            Nom = cbLogiciel.Text;
+            version.CodeLogiciel = cbLogiciel.SelectedValue.ToString();
+            version.NumeroVersion = float.Parse(mtbNumVersion.Text);
             version.DateOuverture = DateTime.Parse(mtbDateOuverture.Text);
             version.DateSortiePrevue = DateTime.Parse(mtbDateSortie.Text);
-            version.Millesime = (short)version.DateSortiePrevue.Year;
+            version.Millesime = short.Parse(mtbMillesime.Text);
         }
     }
 }

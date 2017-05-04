@@ -21,13 +21,19 @@ namespace JobOverview
             cbLogiciel.SelectionChangeCommitted += CbLogiciel_SelectionChangeCommitted;
             btnNewVersion.Click += BtnNewVersion_Click;
             btnSupVersion.Click += BtnSupVersion_Click;
+            btnEnregister.Click += BtnEnregister_Click;
         }
 
-        private void BtnSupVersion_Click(object sender, EventArgs e)
+        private void BtnEnregister_Click(object sender, EventArgs e)
         {
-            Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
-            _SupprimerVersion.Add(version);
-            _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().ListeVersions.Remove(version);
+            foreach (var item in _AjouterVersion)
+            {
+                DALLogiciel.InsertVersion(item);
+            }
+            foreach (var item in _SupprimerVersion)
+            {
+                DALLogiciel.RemoveVersion(item);
+            }
         }
 
         private void BtnNewVersion_Click(object sender, EventArgs e)
@@ -37,17 +43,31 @@ namespace JobOverview
                 form.ShowDialog();
                 if (form.DialogResult.Equals(DialogResult.OK))
                 {
-                    _listeLogiciels.Where( l => l.Nom == form.Nom).First().ListeVersions.Add(form.version);
+                    _listeLogiciels.Where(l => l.Nom == form.Nom).First().ListeVersions.Add(form.version);
                     _AjouterVersion.Add(form.version);
                 }
             }
         }
+        private void BtnSupVersion_Click(object sender, EventArgs e)
+        {
+            Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
+
+            if (TempData.istePersonne.Contains<Personne>( new Personne))
+            {
+                if (!_AjouterVersion.Contains<Version>(version))
+                    _SupprimerVersion.Add(version);
+                else
+                    _AjouterVersion.Remove(version); 
+            }
+
+            _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Remove(version);
+        }
 
         private void CbLogiciel_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            dgvVersion.DataSource = _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().
+            dgvVersion.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
                 ListeVersions;
-            dgvModule.DataSource = _listeLogiciels.Where(l => l.Nom == cbLogiciel.SelectedText).First().
+            dgvModule.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
                 ListeModules;
         }
 

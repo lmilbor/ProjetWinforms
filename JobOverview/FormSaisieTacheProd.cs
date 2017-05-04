@@ -12,9 +12,9 @@ namespace JobOverview
 {
     public partial class FormSaisieTacheProd : Form
     {
-        private List<Logiciel> _listeLogiciel;
-        private List<Personne> _listePersonne;
-        private List<Activité> _listeActivite;
+        private BindingList<Logiciel> _listeLogiciel;
+        private BindingList<Personne> _listePersonne;
+        private BindingList<Activité> _listeActivite;
         public FormSaisieTacheProd()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace JobOverview
             //Initialisation des listes
             _listePersonne = DALTache.GetListePersonne();
             _listeLogiciel = DALLogiciel.GetListLogiciel();
-            _listeActivite = DALTache.GetListeActivite();
+            //_listeActivite = DALTache.GetListeActivite();
 
             //Alimentation des ComboBox
             cbLogiciel.DataSource = _listeLogiciel.Select(a => a.Nom).OrderBy(b => b).ToList();

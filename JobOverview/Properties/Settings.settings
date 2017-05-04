@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ConnectionStringJobOverview" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=LMILBOR17-DE\IP08R2;Initial Catalog=WinFormJobPverview;Integrated Security=True</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
