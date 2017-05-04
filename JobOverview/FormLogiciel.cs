@@ -51,14 +51,21 @@ namespace JobOverview
         private void BtnSupVersion_Click(object sender, EventArgs e)
         {
             Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
-
-            if (TempData..)
+            if (!_AjouterVersion.Contains<Version>(version))
             {
-                if (!_AjouterVersion.Contains<Version>(version))
-                    _SupprimerVersion.Add(version);
-                else
-                    _AjouterVersion.Remove(version); 
+                foreach (var personne in TempData.ListePersonne)
+                {
+                    foreach (var tache in personne.ListeTacheProd)
+                    {
+                        if (!tache.Version.Equals(version))
+                        {
+                            _SupprimerVersion.Add(version);
+                        }
+                    }
+                }
             }
+            else
+                _AjouterVersion.Remove(version);
 
             _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Remove(version);
         }
