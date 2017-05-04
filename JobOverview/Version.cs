@@ -8,6 +8,7 @@ namespace JobOverview
 {
     public class Version : IEquatable<Version>
     {
+        public string CodeLogiciel { get; set; }
         public float NumeroVersion { get; set; }
         public short Millesime { get; set; }
         public DateTime DateOuverture { get; set; }

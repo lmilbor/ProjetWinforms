@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,8 @@ namespace JobOverview
     {
         public string CodeLogiciel { get; set; }
         public string Nom { get; set; }
-        public List<Version> ListeVersions { get; set; }
-        public List<Module> ListeModules { get; set; }
+        public BindingList<Version> ListeVersions { get; set; }
+        public BindingList<Module> ListeModules { get; set; }
 
         bool IEquatable<Logiciel>.Equals(Logiciel other)
         {

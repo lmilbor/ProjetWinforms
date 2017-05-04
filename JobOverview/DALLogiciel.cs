@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace JobOverview
                                 FROM jo.Logiciel l
                                 INNER JOIN jo.Version v ON v.CodeLogiciel = l.CodeLogiciel
                                 INNER JOIN jo.Module m ON m.CodeLogiciel = l.CodeLogiciel
-                                INNER JOIN jo.Release r ON r.NumeroVersion = v.NumeroVersion
+                                LEFT OUTER JOIN jo.Release r ON r.NumeroVersion = v.NumeroVersion
                                 ORDER BY r.DateSetup DESC";
             using (var connect = new SqlConnection(connectString))
             {
@@ -63,8 +64,8 @@ namespace JobOverview
                     logiciel = new Logiciel();
                     logiciel.CodeLogiciel = (string)reader["CodeLogiciel"];
                     logiciel.Nom = (string)reader["Nom"];
-                    logiciel.ListeVersions = new List<Version>();
-                    logiciel.ListeModules = new List<Module>();
+                    logiciel.ListeVersions = new BindingList<Version>();
+                    logiciel.ListeModules = new BindingList<Module>();
                     listeLogiciel.Add(logiciel);
                 }
                 else
@@ -81,7 +82,9 @@ namespace JobOverview
                 version.NumeroVersion = (float)reader["NumeroVersion"];
                 version.DateOuverture = (DateTime)reader["DateOuverture"];
                 version.DateSortiePrevue = (DateTime)reader["DateSortiePrevue"];
-                version.LastNumeroRelease = (short)reader["NumeroRelease"];
+                if (reader["NumeroRelease"] != DBNull.Value)
+                    version.LastNumeroRelease = (short)reader["NumeroRelease"]; 
+                version.CodeLogiciel = (string)reader["CodeLogiciel"];
                 if (logiciel.ListeVersions.Count == 0 || !(logiciel.ListeVersions.Contains<Version>(version)))
                     logiciel.ListeVersions.Add(version);
 
@@ -98,6 +101,106 @@ namespace JobOverview
                     logiciel.ListeModules.Add(module);
 
                 #endregion
+            }
+        }
+        /// <summary>
+        /// Insert une nouvelle version dans la base de donnée.
+        /// </summary>
+        /// <param name="version">La version à ajouter.</param>
+        static public void InsertVersion(Version version)
+        {
+            var listProduit = new BindingList<Version>();
+            var connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+            string sqlQuery = @"INSERT jo.Version (CodeLogiciel, DateOuverture, DateSortiePrevue, Millesime, NumeroVersion) VALUES
+                                (@CodeLogiciel, @DateOuverture, @DateSortiePrevue, @Millesime, @NumeroVersion)";
+
+            #region Définition des paramètres
+            var codeLogiciel = new SqlParameter("@CodeLogiciel", DbType.String);
+            var dateOuverture = new SqlParameter("@DateOuverture", DbType.DateTime);
+            var dateSortiePrevue = new SqlParameter("@DateSortiePrevue", DbType.DateTime);
+            var millesime = new SqlParameter("@Millesime", DbType.Int16);
+            var numeroVersion = new SqlParameter("@NumeroVersion", DbType.Double);
+
+            codeLogiciel.Value = version.CodeLogiciel;
+            dateOuverture.Value = version.DateOuverture;
+            dateSortiePrevue.Value = version.DateSortiePrevue;
+            millesime.Value = version.Millesime;
+            numeroVersion.Value = version.NumeroVersion;
+            #endregion
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                connect.Open();
+                //on initialise la transaction
+                SqlTransaction tran = connect.BeginTransaction();
+
+                #region Ajout des paramètres
+                var command = new SqlCommand(sqlQuery, connect, tran);
+                command.Parameters.Add(codeLogiciel);
+                command.Parameters.Add(dateOuverture);
+                command.Parameters.Add(dateSortiePrevue);
+                command.Parameters.Add(millesime);
+                command.Parameters.Add(numeroVersion);
+                #endregion
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                    // si tout se passe bien on commit la transaction
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    // si un problème survient, on rollback
+                    tran.Rollback();
+                    throw;
+                }
+            }
+        }
+        /// <summary>
+        /// Supprime une version de la base de donnée.
+        /// </summary>
+        /// <param name="version">version à supprimer.</param>
+        static public void RemoveVersion(Version version)
+        {
+            var listProduit = new BindingList<Version>();
+            var connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+            string sqlQuery = @"DELETE jo.Version
+                                FROM jo.Version
+                                WHERE jo.Version.NumeroVersion = @NumeroVersion AND jo.Version.CodeLogiciel = @CodeLogiciel";
+
+            #region Définition des paramètres
+            var codeLogiciel = new SqlParameter("@CodeLogiciel", DbType.String);
+            var numeroVersion = new SqlParameter("@NumeroVersion", DbType.Double);
+
+            codeLogiciel.Value = version.CodeLogiciel;
+            numeroVersion.Value = version.NumeroVersion;
+            #endregion
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                connect.Open();
+                //on initialise la transaction
+                SqlTransaction tran = connect.BeginTransaction();
+
+                #region Ajout des paramètres
+                var command = new SqlCommand(sqlQuery, connect, tran);
+                command.Parameters.Add(codeLogiciel);
+                command.Parameters.Add(numeroVersion);
+                #endregion
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                    // si tout se passe bien on commit la transaction
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    // si un problème survient, on rollback
+                    tran.Rollback();
+                    throw;
+                }
             }
         }
     }

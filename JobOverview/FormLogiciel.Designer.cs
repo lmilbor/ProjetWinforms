@@ -96,7 +96,7 @@
             this.dgvVersion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVersion.Location = new System.Drawing.Point(150, 31);
             this.dgvVersion.Name = "dgvVersion";
-            this.dgvVersion.Size = new System.Drawing.Size(358, 411);
+            this.dgvVersion.Size = new System.Drawing.Size(551, 294);
             this.dgvVersion.TabIndex = 5;
             // 
             // lblVersion
@@ -113,7 +113,7 @@
             // 
             this.lblModule.AutoSize = true;
             this.lblModule.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModule.Location = new System.Drawing.Point(528, 11);
+            this.lblModule.Location = new System.Drawing.Point(704, 11);
             this.lblModule.Name = "lblModule";
             this.lblModule.Size = new System.Drawing.Size(61, 17);
             this.lblModule.TabIndex = 8;
@@ -125,16 +125,16 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvModule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvModule.Location = new System.Drawing.Point(514, 31);
+            this.dgvModule.Location = new System.Drawing.Point(707, 31);
             this.dgvModule.Name = "dgvModule";
-            this.dgvModule.Size = new System.Drawing.Size(481, 411);
+            this.dgvModule.Size = new System.Drawing.Size(207, 294);
             this.dgvModule.TabIndex = 9;
             // 
             // FormLogiciel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1005, 446);
+            this.ClientSize = new System.Drawing.Size(924, 329);
             this.Controls.Add(this.dgvModule);
             this.Controls.Add(this.lblModule);
             this.Controls.Add(this.lblVersion);
