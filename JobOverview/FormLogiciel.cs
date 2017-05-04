@@ -52,7 +52,7 @@ namespace JobOverview
         {
             Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
 
-            if (TempData.istePersonne.Contains<Personne>( new Personne))
+            if (TempData..)
             {
                 if (!_AjouterVersion.Contains<Version>(version))
                     _SupprimerVersion.Add(version);

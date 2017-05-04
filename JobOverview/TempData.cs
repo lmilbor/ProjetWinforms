@@ -9,7 +9,7 @@ namespace JobOverview
 {
     static public class TempData
     {
-        static public BindingList<Personne> istePersonne { get; set; }
+        static public BindingList<Personne> ListePersonne { get; set; }
         static public BindingList<Logiciel> ListeLogiciel { get; set; }
 
     }
