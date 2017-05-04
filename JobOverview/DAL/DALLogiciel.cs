@@ -19,7 +19,7 @@ namespace JobOverview
 
             var connectString = Properties.Settings.Default.ConnectionStringJobOverview;
             string sqlQuery = @"SELECT l.CodeLogiciel as CodeLogiciel, l.Nom as Nom,
-                                v.Millesime as Millesime, v.NumeroVersion as NumeroVersion,
+                                v.Millesime as Millesime, v.NumeroVersion as NumeroVersion, v.DateOuverture as DateOuverture, v.DateSortiePrevue as DateSortiePrevue,
                                 r.NumeroRelease as NumeroRelease,
                                 m.CodeModule as CodeModule, m.Libelle as Libelle
                                 FROM jo.Logiciel l
@@ -78,6 +78,8 @@ namespace JobOverview
                 Version version = new Version();
                 version.Millesime = (short)reader["Millesime"];
                 version.NumeroVersion = (float)reader["NumeroVersion"];
+                version.DateOuverture = (DateTime)reader["DateOuverture"];
+                version.DateSortiePrevue = (DateTime)reader["DateSortiePrevue"];
                 version.LastNumeroRelease = (short)reader["NumeroRelease"];
                 if (logiciel.ListeVersions.Count == 0 || !(logiciel.ListeVersions.Contains<Version>(version)))
                     logiciel.ListeVersions.Add(version);

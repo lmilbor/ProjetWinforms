@@ -10,6 +10,8 @@ namespace JobOverview
     {
         public float NumeroVersion { get; set; }
         public short Millesime { get; set; }
+        public DateTime DateOuverture { get; set; }
+        public DateTime DateSortiePrevue { get; set; }
         public short LastNumeroRelease { get; set; }
 
         bool IEquatable<Version>.Equals(Version other)
