@@ -12,21 +12,8 @@ namespace JobOverview
 {
     public partial class FormSaisieTacheProd : Form
     {
-
-        #region Champs privés
-        private BindingList<Logiciel> _listeLogiciel;
-        private BindingList<Personne> _listePersonne;
-        private BindingList<Activité> _listeActiviteProd;
-        private BindingList<Module> _listeModule;
-        #endregion
-
         #region Propriétés public
         public TacheProd TacheProd { get; set; }
-        public Version Version { get; set; }
-        public Logiciel Logiciel { get; set; }
-        public Module Module { get; set; }
-        public Activité Activite { get; set; }
-        public Personne Pers { get; set; } 
         #endregion
 
 
@@ -37,36 +24,31 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
-            //Initialisation des listes
-            _listePersonne = DALTache.GetListePersonne();
-            _listeLogiciel = DALLogiciel.GetListLogiciel();
-            _listeActiviteProd = new BindingList<Activité>(DALTache.GetListeActivite().Where(a => a.EstAnnexe == false).ToList());
-            _listeModule = DALTache.GetListeModule();
 
             //Alimentation des ComboBox
             //Combo Box Logiciel
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
-            cbLogiciel.DataSource = _listeLogiciel.OrderBy(b => b.Nom).ToList();
+            cbLogiciel.DataSource = TempData.ListeLogiciel.OrderBy(b => b.Nom).ToList();
 
             //Combo Box Version
-            cbVersion.DataSource = _listeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
+            cbVersion.DataSource = TempData.ListeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
             .ListeVersions.Select(b => b.NumeroVersion).OrderBy(b => b).ToList();
 
             //Combo Box Activité
             cbActivite.DisplayMember = "Libelle";
             cbActivite.ValueMember = "CodeActivite";
-            cbActivite.DataSource = _listeActiviteProd.OrderBy(b => b.Libelle).ToList();
+            cbActivite.DataSource = TempData.ListeActivite.Where( a => !(a.EstAnnexe)).OrderBy(b => b.Libelle).ToList();
 
             //Combo Box Module
             cbModule.DisplayMember = "Libellé";
             cbModule.ValueMember = "CodeModule";
-            cbModule.DataSource = _listeModule.OrderBy(b => b.Libellé).ToList();
+            cbModule.DataSource = TempData.ListeLogiciel.Select( l => l.ListeModules).OrderBy(m => m.Select(l => l.Libellé)).ToList();
 
             //Combo Box Personne
             cbPersonne.DisplayMember = "Nom";
             cbPersonne.ValueMember = "Login";
-            cbPersonne.DataSource = _listePersonne.OrderBy(b => b.Nom).Distinct().ToList();
+            cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList();
 
             base.OnLoad(e); 
         }
@@ -78,11 +60,6 @@ namespace JobOverview
 
                 // Initialisation des propriétées
                 TacheProd = new TacheProd();
-                Activite = new Activité();
-                Module = new Module();
-                Version = new Version();
-                Logiciel = new Logiciel();
-                Pers = new Personne();
                 TacheProd.IdTache = new Guid();
 
                 try
@@ -113,12 +90,11 @@ namespace JobOverview
                     else
                         throw new FormatException();
 
-                    Pers.Nom = cbPersonne.Text;
-                    Activite.CodeActivite = cbActivite.ValueMember;
-                    Activite.EstAnnexe = false;
-                    Module.CodeModule = cbModule.ValueMember;
-                    Version.NumeroVersion = float.Parse(cbVersion.Text);
-                    Logiciel.CodeLogiciel = cbLogiciel.ValueMember;
+                    TacheProd.Logiciel = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First();
+                    TacheProd.Module = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeModules.Where( m => m.CodeModule == cbModule.SelectedValue.ToString()).FirstOrDefault();
+                    TacheProd.Version = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Where(v => v.NumeroVersion == ((float)cbVersion.SelectedValue)).FirstOrDefault();
+                    TacheProd.Login = TempData.ListePersonne.Where( p => p.Login == cbPersonne.SelectedValue.ToString()).Select( p => p.Login).FirstOrDefault();
+                    TacheProd.Activite = TempData.ListeActivite.Where(a => a.CodeActivite == cbActivite.SelectedValue.ToString()).FirstOrDefault();
                 }
                 catch (FormatException)
                 {

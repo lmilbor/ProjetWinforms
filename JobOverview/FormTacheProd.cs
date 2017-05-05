@@ -38,17 +38,9 @@ namespace JobOverview
                 DialogResult dr = form.ShowDialog();
                 if (dr == DialogResult.OK)
                 {
-                    // Association des valeurs des combos box de la fenêtre modale à la liste de tache de production
-                    form.TacheProd.Version = form.Version;
-                    form.TacheProd.Logiciel = form.Logiciel;
-                    form.TacheProd.Module = form.Module;
-                    form.TacheProd.Activite = form.Activite;
-                    form.TacheProd.Login = form.Pers.Login;
-                    form.TacheProd.IdTache = new Guid();
-
                     // Ajout de la nouvelle tache dans la liste de la personne concernée
-                    _listePersonne.Where(b => b.Nom == (form.Pers.Nom).ToString()).FirstOrDefault().ListeTacheProd.Add(form.TacheProd);
                     _listeNouvelleTacheProd.Add(form.TacheProd);
+                    _listePersonne.Where(p => p.Login == (form.TacheProd.Login).ToString()).FirstOrDefault().ListeTacheProd.Add(form.TacheProd);
                     MiseAJourForm();
                 }
             }

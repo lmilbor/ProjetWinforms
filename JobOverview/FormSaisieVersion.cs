@@ -13,7 +13,6 @@ namespace JobOverview
     public partial class FormSaisieVersion : Form
     {
         public Version version { get; set; }
-        public string Nom { get; set; }
         public FormSaisieVersion()
         {
             version = new Version();
