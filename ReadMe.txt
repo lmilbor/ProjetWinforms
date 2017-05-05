@@ -2,7 +2,7 @@
 ===				 Projet Winforms                           ===
 ==============================================================================
 
-* Documents livrés:
+* Documents livrÃ©s:
 
 - Sources :
 	- JobOverViewWinforms (.csproj)
@@ -14,43 +14,42 @@
 - Notice:
 	- ReadMe (.txt)
 	- Notice utilisateur (.docx)
-	- Notice technique (.docx)
 
 - Sauvegarde de la base:
 	- JobOverview (.bak)
 
-* Développements réalisés
+* DÃ©veloppements rÃ©alisÃ©s
 
 - 3.1 Techniques
 
-	* Une fenêtre de dialogue demande la chaine de connexion de 
+	* Une fenÃªtre de dialogue demande la chaine de connexion de 
 	  l'utilisateur afin qu'il puisse utiliser des fonctions 
-	  faisant appel à la BDD.
+	  faisant appel Ã  la BDD.
 	
 - 4.1 Gestion des versions de logiciels :
 
-	* La fenêtre affiche les modules et versions du logiciel sélectionné
-	 depuis une liste déroulante.
+	* La fenÃªtre affiche les modules et versions du logiciel sÃ©lectionnÃ©
+	 depuis une liste dÃ©roulante.
 
 	* Il est possible d'ajouter ou de supprimer de nouvelle version de 
 	 logiciel.
 	
 	* Un bouton enregistrer permet de synchroniser les modifications
-	  avec les données de la BDD.
+	  avec les donnÃ©es de la BDD.
 
 - 4.2 Gestion des taches de production :
 
-	* La fenêtre affiche les taches de production filtré par personne,
+	* La fenÃªtre affiche les taches de production filtrÃ© par personne,
 	  par logiciel et par version.
 
-	* Une fenêtre modale permet d'ajouter une nouvelle tache lié à 
+	* Une fenÃªtre modale permet d'ajouter une nouvelle tache liÃ© Ã  
 	  une personne.
 
 	* Un bouton enregistrer permet de synchroniser les modifications
-	  avec les données de la BDD.
+	  avec les donnÃ©es de la BDD.
 	
 	
 
 ==============================================================================
-===	                    Léo MILBOR - Benoit GUILLAUMIN                 ===
+===	                    LÃ©o MILBOR - Benoit GUILLAUMIN                 ===
 ==============================================================================
