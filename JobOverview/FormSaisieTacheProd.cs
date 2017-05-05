@@ -113,18 +113,12 @@ namespace JobOverview
                     else
                         throw new FormatException();
 
-                    Pers.Nom = cbPersonne.Text;
-                    Activite.CodeActivite = cbActivite.ValueMember;
-                    Activite.EstAnnexe = false;
-                    Module.CodeModule = cbModule.ValueMember;
-                    Version.NumeroVersion = float.Parse(cbVersion.Text);
-                    Logiciel.CodeLogiciel = cbLogiciel.ValueMember;
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Veuillez remplir tous les champs. Seul le champ description est falcultatif.");
-                    e.Cancel = true;
-                }
+            Pers.Nom = cbPersonne.Text;
+            Activite.Libelle = cbActivite.Text;
+            Activite.Annexe = false;
+            Module.Libellé = cbModule.Text;
+            Version.NumeroVersion = float.Parse(cbVersion.Text);
+            Logiciel.Nom = cbLogiciel.Text;
 
             }
             base.OnClosing(e);
