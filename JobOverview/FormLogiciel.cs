@@ -26,7 +26,7 @@ namespace JobOverview
 
         private void BtnEnregister_Click(object sender, EventArgs e)
         {
-            foreach (var item in _AjouterVersion)
+            foreach (var item in _AjouterVersion) //TODO ajout d'un type table dans la BDD pour faire de l'insertion et de la suppression de masse
             {
                 DALLogiciel.InsertVersion(item);
             }
