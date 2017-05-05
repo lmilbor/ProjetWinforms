@@ -30,7 +30,6 @@ namespace JobOverview
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            Nom = cbLogiciel.Text;
             version.CodeLogiciel = cbLogiciel.SelectedValue.ToString();
             version.NumeroVersion = float.Parse(mtbNumVersion.Text);
             version.DateOuverture = DateTime.Parse(mtbDateOuverture.Text);
