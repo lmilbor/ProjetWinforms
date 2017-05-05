@@ -31,6 +31,8 @@
             this.tbConnection = new System.Windows.Forms.TextBox();
             this.btnConnect = new System.Windows.Forms.Button();
             this.lblConnectionString = new System.Windows.Forms.Label();
+            this.btnAnnuler = new System.Windows.Forms.Button();
+            this.btnQuitter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbConnection
@@ -43,7 +45,7 @@
             // btnConnect
             // 
             this.btnConnect.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnConnect.Location = new System.Drawing.Point(100, 51);
+            this.btnConnect.Location = new System.Drawing.Point(12, 51);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 1;
@@ -59,11 +61,33 @@
             this.lblConnectionString.TabIndex = 2;
             this.lblConnectionString.Text = "Entrez votre chaine de connexion";
             // 
+            // btnAnnuler
+            // 
+            this.btnAnnuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnAnnuler.Location = new System.Drawing.Point(100, 51);
+            this.btnAnnuler.Name = "btnAnnuler";
+            this.btnAnnuler.Size = new System.Drawing.Size(75, 23);
+            this.btnAnnuler.TabIndex = 3;
+            this.btnAnnuler.Text = "Annuler";
+            this.btnAnnuler.UseVisualStyleBackColor = true;
+            // 
+            // btnQuitter
+            // 
+            this.btnQuitter.DialogResult = System.Windows.Forms.DialogResult.Abort;
+            this.btnQuitter.Location = new System.Drawing.Point(197, 51);
+            this.btnQuitter.Name = "btnQuitter";
+            this.btnQuitter.Size = new System.Drawing.Size(75, 23);
+            this.btnQuitter.TabIndex = 4;
+            this.btnQuitter.Text = "Quitter";
+            this.btnQuitter.UseVisualStyleBackColor = true;
+            // 
             // FormConnexion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 86);
+            this.Controls.Add(this.btnQuitter);
+            this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.lblConnectionString);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.tbConnection);
@@ -80,5 +104,7 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Label lblConnectionString;
         private System.Windows.Forms.TextBox tbConnection;
+        private System.Windows.Forms.Button btnAnnuler;
+        private System.Windows.Forms.Button btnQuitter;
     }
 }
