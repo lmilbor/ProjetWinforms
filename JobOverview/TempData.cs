@@ -11,6 +11,6 @@ namespace JobOverview
     {
         static public BindingList<Personne> ListePersonne { get; set; }
         static public BindingList<Logiciel> ListeLogiciel { get; set; }
-
+        static public BindingList<Activité> ListeActivite { get; set; }
     }
 }
