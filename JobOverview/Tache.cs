@@ -10,6 +10,7 @@ namespace JobOverview
     {
         public Guid IdTache { get; set; }
         public string Libelle { get; set; }
+        public string Login { get; set; }
 
         //Si Annexe = 0, il s'agit d'une tache de production, 
         //sinon il s'agit d'une tache annexe

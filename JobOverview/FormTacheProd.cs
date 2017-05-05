@@ -15,7 +15,7 @@ namespace JobOverview
         #region Champs Privés
         private BindingList<Personne> _listePersonne;
         private BindingList<Logiciel> _listeLogiciel;
-        private BindingList<TacheProd> _listeNouvelleTacheProd; 
+        private BindingList<TacheProd> _listeNouvelleTacheProd;
         #endregion
 
         public FormTacheProd()
@@ -24,10 +24,15 @@ namespace JobOverview
             cbPersonne.SelectionChangeCommitted += CbPersonne_SelectionChangeCommitted;
             btnAjout.Click += BtnAjout_Click;
             btnEnregistrer.Click += (object sender, EventArgs e) => DALTache.InsertTacheProd(_listeNouvelleTacheProd);
+            dgvTacheProd.CellMouseClick += (object sender, DataGridViewCellMouseEventArgs e) => tbDescripTache.Text = (_listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First()
+                                                                                                .ListeTacheProd.Select(b => b.Description)).FirstOrDefault();
+            _listeNouvelleTacheProd = new BindingList<TacheProd>();
         }
+
 
         private void BtnAjout_Click(object sender, EventArgs e)
         {
+
             using (var form = new FormSaisieTacheProd())
             {
                 DialogResult dr = form.ShowDialog();
@@ -38,6 +43,8 @@ namespace JobOverview
                     form.TacheProd.Logiciel = form.Logiciel;
                     form.TacheProd.Module = form.Module;
                     form.TacheProd.Activite = form.Activite;
+                    form.TacheProd.Login = form.Pers.Login;
+                    form.TacheProd.IdTache = new Guid();
 
                     // Ajout de la nouvelle tache dans la liste de la personne concernée
                     _listePersonne.Where(b => b.Nom == (form.Pers.Nom).ToString()).FirstOrDefault().ListeTacheProd.Add(form.TacheProd);
@@ -46,6 +53,7 @@ namespace JobOverview
                 }
             }
         }
+
 
         private void CbPersonne_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -60,14 +68,23 @@ namespace JobOverview
             _listeLogiciel = DALLogiciel.GetListLogiciel();
 
             // Initialisation des combo box
-            cbLogiciel.DataSource = _listeLogiciel.Select(a => a.Nom).OrderBy(b => b).ToList();
-            cbVersion.DataSource = _listeLogiciel.Where(a => a.Nom == (cbLogiciel.SelectedValue).ToString()).First()
-                .ListeVersions.Select(b => b.NumeroVersion).OrderBy(c => c).ToList();
-            cbPersonne.DataSource = _listePersonne.Select(a => a.Nom).OrderBy(b => b).Distinct().ToList();
+            //Combo Box Logiciel
+            cbLogiciel.DisplayMember = "Nom";
+            cbLogiciel.ValueMember = "CodeLogiciel";
+            cbLogiciel.DataSource = _listeLogiciel.OrderBy(b => b.Nom).ToList();
+
+            //Combo Box Version
+            cbVersion.DataSource = _listeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
+            .ListeVersions.Select(b => b.NumeroVersion).OrderBy(b => b).ToList();
+
+            //Combo Box Personne
+            cbPersonne.DisplayMember = "Nom";
+            cbPersonne.ValueMember = "Login";
+            cbPersonne.DataSource = _listePersonne.OrderBy(b => b.Nom).Distinct().ToList();
 
             MiseAJourForm();
 
-            base.OnLoad(e); 
+            base.OnLoad(e);
         }
 
         /// <summary>
@@ -76,8 +93,8 @@ namespace JobOverview
         public void MiseAJourForm()
         {
             // Remploi la data grid view des taches de production
-            dgvTacheProd.DataSource = _listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First().ListeTacheProd
-            .Where(b => (b.Logiciel.Nom == (cbLogiciel.SelectedValue).ToString()) && (b.Version.NumeroVersion == (float)cbVersion.SelectedValue)).ToList();
+            dgvTacheProd.DataSource = _listePersonne.Where(a => a.Login == cbPersonne.SelectedValue.ToString()).First().ListeTacheProd
+            .Where(b => (b.Logiciel.CodeLogiciel == cbLogiciel.SelectedValue.ToString()) && (b.Version.NumeroVersion == (float)cbVersion.SelectedValue)).ToList();
 
             // Rend invisible les colonnes non souhaitées
             dgvTacheProd.Columns["DureePrevue"].Visible = false;
@@ -89,11 +106,7 @@ namespace JobOverview
             dgvTacheProd.Columns["EstAnnexe"].Visible = false;
             dgvTacheProd.Columns["Activite"].Visible = false;
             dgvTacheProd.Columns["IdTache"].Visible = false;
-
-            // Renpli la textbox de description
-            tbDescripTache.Text = (_listePersonne.Where(a => a.Nom == (cbPersonne.SelectedValue).ToString()).First()
-                .ListeTacheProd.Select(b => b.Description)).FirstOrDefault();
-
+            dgvTacheProd.Columns["Login"].Visible = false;
         }
     }
 }

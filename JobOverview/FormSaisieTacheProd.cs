@@ -40,63 +40,93 @@ namespace JobOverview
             //Initialisation des listes
             _listePersonne = DALTache.GetListePersonne();
             _listeLogiciel = DALLogiciel.GetListLogiciel();
-            _listeActiviteProd = new BindingList<Activité>(DALTache.GetListeActivite().Where(a => a.Annexe == false).ToList());
+            _listeActiviteProd = new BindingList<Activité>(DALTache.GetListeActivite().Where(a => a.EstAnnexe == false).ToList());
             _listeModule = DALTache.GetListeModule();
 
             //Alimentation des ComboBox
-            cbLogiciel.DataSource = _listeLogiciel.Select(a => a.Nom).OrderBy(b => b).ToList();
-            cbVersion.DataSource = _listeLogiciel.Where(a => a.Nom == (cbLogiciel.SelectedValue).ToString()).First()
-               .ListeVersions.Select(b => b.NumeroVersion).OrderBy(c => c).ToList();
-            cbActivite.DataSource = _listeActiviteProd.Select(a => a.Libelle).ToList();
-            cbModule.DataSource = _listeModule.Select(a => a.Libellé).ToList();
-            cbPersonne.DataSource = _listePersonne.Select(a => a.Nom).OrderBy(b => b).Distinct().ToList();
+            //Combo Box Logiciel
+            cbLogiciel.DisplayMember = "Nom";
+            cbLogiciel.ValueMember = "CodeLogiciel";
+            cbLogiciel.DataSource = _listeLogiciel.OrderBy(b => b.Nom).ToList();
+
+            //Combo Box Version
+            cbVersion.DataSource = _listeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
+            .ListeVersions.Select(b => b.NumeroVersion).OrderBy(b => b).ToList();
+
+            //Combo Box Activité
+            cbActivite.DisplayMember = "Libelle";
+            cbActivite.ValueMember = "CodeActivite";
+            cbActivite.DataSource = _listeActiviteProd.OrderBy(b => b.Libelle).ToList();
+
+            //Combo Box Module
+            cbModule.DisplayMember = "Libellé";
+            cbModule.ValueMember = "CodeModule";
+            cbModule.DataSource = _listeModule.OrderBy(b => b.Libellé).ToList();
+
+            //Combo Box Personne
+            cbPersonne.DisplayMember = "Nom";
+            cbPersonne.ValueMember = "Login";
+            cbPersonne.DataSource = _listePersonne.OrderBy(b => b.Nom).Distinct().ToList();
 
             base.OnLoad(e); 
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            // Initialisation des propriétées
-            TacheProd = new TacheProd();
-            Activite = new Activité();
-            Module = new Module();
-            Version = new Version();
-            Logiciel = new Logiciel();
-            TacheProd.IdTache = new Guid();
+            if (DialogResult == DialogResult.OK)
+            {
 
-            // Renseignement de chaque champs des taches de production
-            if(!string.IsNullOrWhiteSpace(rtbDescription.Text))
-                TacheProd.Description = rtbDescription.Text;
+                // Initialisation des propriétées
+                TacheProd = new TacheProd();
+                Activite = new Activité();
+                Module = new Module();
+                Version = new Version();
+                Logiciel = new Logiciel();
+                Pers = new Personne();
+                TacheProd.IdTache = new Guid();
 
-            string tempString = mtbDureePrevue.Text.Replace(",", "");
-            if (!string.IsNullOrWhiteSpace(tempString))
-                TacheProd.DureePrevue = float.Parse(mtbDureePrevue.Text);
-            else
-                MessageBox.Show("Le champs Durée Prévue ne peut pas rester vide");
+                try
+                {
+                    // Renseignement de chaque champs des taches de production
+                    if (!string.IsNullOrWhiteSpace(rtbDescription.Text))
+                        TacheProd.Description = rtbDescription.Text;
 
-            tempString = mtbDureeRestante.Text.Replace(",", "");
-            if (!string.IsNullOrWhiteSpace(tempString))
-                TacheProd.DureeRestanteEstimee = float.Parse(mtbDureeRestante.Text);
-            else
-                MessageBox.Show("Le champs Durée Restante Estimée ne peut pas rester vide");
+                    string tempString = mtbDureePrevue.Text.Replace(",", "");
+                    if (!string.IsNullOrWhiteSpace(tempString))
+                        TacheProd.DureePrevue = float.Parse(mtbDureePrevue.Text);
+                    else
+                        throw new FormatException();
 
-            if (!string.IsNullOrWhiteSpace(tbLibelle.Text))
-                TacheProd.Libelle = tbLibelle.Text;
-            else
-                MessageBox.Show("Le champs Libellé ne peut pas rester vide");
+                    tempString = mtbDureeRestante.Text.Replace(",", "");
+                    if (!string.IsNullOrWhiteSpace(tempString))
+                        TacheProd.DureeRestanteEstimee = float.Parse(mtbDureeRestante.Text);
+                    else
+                        throw new FormatException();
 
-            if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
-                TacheProd.Numero = int.Parse(mtbNumero.Text);
-            else
-                MessageBox.Show("Le champs Numéro ne peut pas rester vide");
+                    if (!string.IsNullOrWhiteSpace(tbLibelle.Text))
+                        TacheProd.Libelle = tbLibelle.Text;
+                    else
+                        throw new FormatException();
 
-            Pers.Nom = cbPersonne.Text;
-            Activite.Libelle = cbActivite.Text;
-            Activite.Annexe = false;
-            Module.Libellé = cbModule.Text;
-            Version.NumeroVersion = float.Parse(cbVersion.Text);
-            Logiciel.Nom = cbLogiciel.Text;
+                    if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
+                        TacheProd.Numero = int.Parse(mtbNumero.Text);
+                    else
+                        throw new FormatException();
 
+                    Pers.Nom = cbPersonne.Text;
+                    Activite.CodeActivite = cbActivite.ValueMember;
+                    Activite.EstAnnexe = false;
+                    Module.CodeModule = cbModule.ValueMember;
+                    Version.NumeroVersion = float.Parse(cbVersion.Text);
+                    Logiciel.CodeLogiciel = cbLogiciel.ValueMember;
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Veuillez remplir tous les champs. Seul le champ description est falcultatif.");
+                    e.Cancel = true;
+                }
+
+            }
             base.OnClosing(e);
         }
 

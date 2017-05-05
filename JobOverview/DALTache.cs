@@ -53,7 +53,7 @@ namespace JobOverview
         /// <param name="listePersonne"></param>
         /// <param name="reader"></param>
         /// <returns></returns>
-        static public BindingList<Personne> GetListePersonneFromReader(BindingList<Personne> listePersonne, SqlDataReader reader)
+        static private BindingList<Personne> GetListePersonneFromReader(BindingList<Personne> listePersonne, SqlDataReader reader)
         {
             while (reader.Read())
             {
@@ -134,14 +134,14 @@ namespace JobOverview
         /// <param name="ListeActivite"></param>
         /// <param name="reader"></param>
         /// <returns></returns>
-        static public BindingList<Activité> GetListeActiviteFromDataReader(BindingList<Activité> ListeActivite, SqlDataReader reader)
+        static private BindingList<Activité> GetListeActiviteFromDataReader(BindingList<Activité> ListeActivite, SqlDataReader reader)
         {
             while (reader.Read())
             {
                 var activ = new Activité();
                 activ.CodeActivite = (string)reader["CodeActivite"];
                 activ.Libelle = (string)reader["Libelle"];
-                activ.Annexe = (bool)reader["Annexe"];
+                activ.EstAnnexe = (bool)reader["Annexe"];
                 ListeActivite.Add(activ); 
             }
             return ListeActivite;
@@ -176,7 +176,7 @@ namespace JobOverview
         /// <param name="ListeModule"></param>
         /// <param name="reader"></param>
         /// <returns></returns>
-        static public BindingList<Module> GetListeModuleFromDataReader(BindingList<Module> ListeModule, SqlDataReader reader)
+        static private BindingList<Module> GetListeModuleFromDataReader(BindingList<Module> ListeModule, SqlDataReader reader)
         {
             while (reader.Read())
             {
@@ -193,17 +193,26 @@ namespace JobOverview
             //Création d'une chaine de connection
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
 
-            //Création d'un string correspondant à la requête SQL
-            string queryString = @"INSERT TacheProd (IdTache, Libelle, EstAnnexe, CodeActivite, Description, Numero, DureePrevue, DureeRestanteEstimee, CodeModule, NumeroVersion, CodeLogiciel)
-SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, DureeRestanteEstimee, Module, Version, Logiciel FROM @MaTable";
+            //Création de string correspondant aux requêtes SQL
+            string queryString1 = @"insert jo.TacheProd(IdTache, Numero, DureePrevue, DureeRestanteEstimee,
+                                   CodeModule, CodeLogicieModule, NumeroVersion, CodeLogicielVersion)
+                                   select IdTache, Numero, DureePrevue, DureeRestanteEstimee, CodeModule, 
+                                   CodeLogicielModule, NumeroVersion, CodeLogicielVersion from @TacheProd";
+
+            string queryString2 = @"insert jo.Tache(IdTache, Libelle, Annexe, CodeActivite, Login, Description)
+                                   select IdTache, Libelle, EstAnnexe, CodeActivite, Login, Description from @Tache";
 
             //Création du paramètre de la requete SQL
-            var param = new SqlParameter("@MaTable", SqlDbType.Structured);
+            var param1 = new SqlParameter("@TacheProd", SqlDbType.Structured);
+            var param2 = new SqlParameter("@Tache", SqlDbType.Structured);
 
             //Appelle de la méthode gérant la création de la table intermédiaire
-            DataTable tableProd = GetDataTableProduit(ListeTacheProd);
-            param.TypeName = "TypeTableTacheProd";
-            param.Value = tableProd;
+            DataTable tableProd = InsertTacheProdWithDatatable(ListeTacheProd);
+            param1.TypeName = "TypeTableTacheProd";
+            param1.Value = tableProd;
+
+            param2.TypeName = "TypeTableTache";
+            param2.Value = tableProd;
 
             using (var connect = new SqlConnection(connectString))
             {
@@ -212,9 +221,13 @@ SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, 
 
                 try
                 {
-                    var command = new SqlCommand(queryString, connect, tran);
-                    command.Parameters.Add(param);
-                    command.ExecuteNonQuery();
+                    var command1 = new SqlCommand(queryString1, connect, tran);
+                    command1.Parameters.Add(param1);
+                    command1.ExecuteNonQuery();
+
+                    var command2 = new SqlCommand(queryString2, connect, tran);
+                    command1.Parameters.Add(param2);
+                    command1.ExecuteNonQuery();
 
                     tran.Commit();
                 }
@@ -226,7 +239,12 @@ SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, 
             }
         }
 
-        public static DataTable GetDataTableProduit(BindingList<TacheProd> ListeTacheProd)
+        /// <summary>
+        /// Création de la table temporaire TacheProd
+        /// </summary>
+        /// <param name="ListeTacheProd"></param>
+        /// <returns></returns>
+        private static DataTable InsertTacheProdWithDatatable(BindingList<TacheProd> ListeTacheProd)
         {
             //Création d'une table mémoire
             DataTable table = new DataTable();
@@ -236,24 +254,6 @@ SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, 
             var colNom = new DataColumn("IdTache", typeof(Guid));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
-
-            //Colonne Libelle
-            colNom = new DataColumn("Libelle", typeof(string));
-            colNom.AllowDBNull = false;
-            table.Columns.Add(colNom);
-
-            //Colonne EstAnnexe
-            colNom = new DataColumn("EstAnnexe", typeof(bool));
-            colNom.AllowDBNull = false;
-            table.Columns.Add(colNom);
-
-            //Colonne Activité
-            colNom = new DataColumn("Activité", typeof(string));
-            colNom.AllowDBNull = false;
-            table.Columns.Add(colNom);
-
-            //Colonne Description
-            table.Columns.Add(new DataColumn("Description", typeof(string)));
 
             //Colonne Numero
             colNom = new DataColumn("Numero", typeof(int));
@@ -285,6 +285,62 @@ SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, 
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
 
+            foreach (var p in ListeTacheProd)
+            {
+                //Création de chaque ligne de la table, si la valeur est null
+                //alors on écrit une valeur null dans la table de type SQL
+                DataRow ligne = table.NewRow();
+                ligne["IdTache"] = p.IdTache;
+                ligne["Numero"] = p.Numero;
+                ligne["DureePrevue"] = p.DureePrevue;
+                ligne["DureeRestanteEstimee"] = p.DureeRestanteEstimee;
+                ligne["Module"] = p.Module;
+                ligne["Version"] = p.Version;
+                ligne["Logiciel"] = p.Logiciel;
+
+                //Ajout de ligne dans la table
+                table.Rows.Add(ligne);
+            }
+            return table;
+        }
+        /// <summary>
+        /// Création de la table temporaire @Tache
+        /// </summary>
+        /// <param name="ListeTacheProd"></param>
+        /// <returns></returns>
+        private static DataTable InsertTacheWithDatatable(BindingList<TacheProd> ListeTacheProd)
+        {
+            //Création d'une table mémoire
+            DataTable table = new DataTable();
+
+            //Création des différentes colonnes
+            //Colonne IdTache
+            var colNom = new DataColumn("IdTache", typeof(Guid));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Libelle
+            colNom = new DataColumn("Libelle", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne EstAnnexe
+            colNom = new DataColumn("EstAnnexe", typeof(bool));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Activité
+            colNom = new DataColumn("Activité", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Login
+            colNom = new DataColumn("Login", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Description
+            table.Columns.Add(new DataColumn("Description", typeof(string)));
 
             foreach (var p in ListeTacheProd)
             {
@@ -294,14 +350,10 @@ SELECT IdTache, Libelle, EstAnnexe, Activite, Description, Numero, DureePrevue, 
                 ligne["IdTache"] = p.IdTache;
                 ligne["Libelle"] = p.Libelle;
                 ligne["EstAnnexe"] = p.EstAnnexe;
+                ligne["Activite"] = p.Activite;
+                ligne["Login"] = p.Login;
                 if (p.Description != null) ligne["Description"] = p.Description;
                 else ligne["Description"] = DBNull.Value;
-                ligne["Numero"] = p.Numero;
-                ligne["DureePrevue"] = p.DureePrevue;
-                ligne["DureeRestanteEstimee"] = p.DureeRestanteEstimee;
-                ligne["Module"] = p.Numero;
-                ligne["Version"] = p.DureePrevue;
-                ligne["Logiciel"] = p.DureeRestanteEstimee;
 
                 //Ajout de ligne dans la table
                 table.Rows.Add(ligne);
