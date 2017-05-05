@@ -10,6 +10,6 @@ namespace JobOverview
     {
         public string CodeActivite { get; set; }
         public string Libelle { get; set; }
-        public bool Annexe { get; set; }
+        public bool EstAnnexe { get; set; }
     }
 }
