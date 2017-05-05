@@ -30,7 +30,7 @@ namespace JobOverview
                     do
                     {
                         form.ShowDialog();
-                    } while (string.IsNullOrWhiteSpace(form.CahineDeConnexion) && !(form.DialogResult.Equals(DialogResult.Cancel)));
+                    } while (string.IsNullOrWhiteSpace(form.ChaineDeConnexion) && !(form.DialogResult.Equals(DialogResult.Cancel)));
                 }
             }
             if (!(string.IsNullOrWhiteSpace(Properties.Settings.Default.ConnectionStringJobOverview)))

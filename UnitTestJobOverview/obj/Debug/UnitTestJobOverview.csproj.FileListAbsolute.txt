@@ -7,3 +7,4 @@ D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\UnitTestJobOverview
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\UnitTestJobOverview\obj\Debug\UnitTestJobOverview.csprojResolveAssemblyReference.cache
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\UnitTestJobOverview\obj\Debug\UnitTestJobOverview.dll
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\UnitTestJobOverview\obj\Debug\UnitTestJobOverview.pdb
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\UnitTestJobOverview\bin\Debug\UnitTestJobOverview.dll.config
