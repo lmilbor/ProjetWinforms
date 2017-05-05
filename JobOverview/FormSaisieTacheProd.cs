@@ -40,7 +40,7 @@ namespace JobOverview
             //Initialisation des listes
             _listePersonne = DALTache.GetListePersonne();
             _listeLogiciel = DALLogiciel.GetListLogiciel();
-            _listeActiviteProd = new BindingList<Activité>(DALTache.GetListeActivite().Where(a => a.Annexe == false).ToList());
+            _listeActiviteProd = new BindingList<Activité>(DALTache.GetListeActivite().Where(a => a.EstAnnexe == false).ToList());
             _listeModule = DALTache.GetListeModule();
 
             //Alimentation des ComboBox
@@ -92,7 +92,7 @@ namespace JobOverview
 
             Pers.Nom = cbPersonne.Text;
             Activite.Libelle = cbActivite.Text;
-            Activite.Annexe = false;
+            Activite.EstAnnexe = false;
             Module.Libellé = cbModule.Text;
             Version.NumeroVersion = float.Parse(cbVersion.Text);
             Logiciel.Nom = cbLogiciel.Text;

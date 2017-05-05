@@ -141,7 +141,7 @@ namespace JobOverview
                 var activ = new Activité();
                 activ.CodeActivite = (string)reader["CodeActivite"];
                 activ.Libelle = (string)reader["Libelle"];
-                activ.Annexe = (bool)reader["Annexe"];
+                activ.EstAnnexe = (bool)reader["Annexe"];
                 ListeActivite.Add(activ); 
             }
             return ListeActivite;

@@ -13,8 +13,8 @@ namespace JobOverview
     public partial class FormLogiciel : Form
     {
         private BindingList<Logiciel> _listeLogiciels;
-        private BindingList<Version> _AjouterVersion;
-        private BindingList<Version> _SupprimerVersion;
+        private List<Version> _AjouterVersion;
+        private List<Version> _SupprimerVersion;
         public FormLogiciel()
         {
             InitializeComponent();
@@ -26,14 +26,8 @@ namespace JobOverview
 
         private void BtnEnregister_Click(object sender, EventArgs e)
         {
-            foreach (var item in _AjouterVersion) //TODO ajout d'un type table dans la BDD pour faire de l'insertion et de la suppression de masse
-            {
-                DALLogiciel.InsertVersion(item);
-            }
-            foreach (var item in _SupprimerVersion)
-            {
-                DALLogiciel.RemoveVersion(item);
-            }
+            DALLogiciel.InsertVersion(_AjouterVersion);
+            DALLogiciel.RemoveVersion(_SupprimerVersion);
         }
 
         private void BtnNewVersion_Click(object sender, EventArgs e)
@@ -52,18 +46,18 @@ namespace JobOverview
         {
             Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
             if (!_AjouterVersion.Contains<Version>(version))
-            {
-                foreach (var personne in TempData.ListePersonne)
-                {
-                    foreach (var tache in personne.ListeTacheProd)
-                    {
-                        if (!tache.Version.Equals(version))
-                        {
+            //{
+            //    foreach (var personne in TempData.ListePersonne)
+            //    {
+            //        foreach (var tache in personne.ListeTacheProd)
+            //        {
+            //            if (!tache.Version.Equals(version))
+            //            {
                             _SupprimerVersion.Add(version);
-                        }
-                    }
-                }
-            }
+            //            }
+            //        }
+            //    }
+            //}
             else
                 _AjouterVersion.Remove(version);
 
@@ -80,8 +74,8 @@ namespace JobOverview
 
         protected override void OnLoad(EventArgs e)
         {
-            _AjouterVersion = new BindingList<Version>();
-            _SupprimerVersion = new BindingList<Version>();
+            _AjouterVersion = new List<Version>();
+            _SupprimerVersion = new List<Version>();
             TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
             _listeLogiciels = TempData.ListeLogiciel;
             cbLogiciel.DataSource = _listeLogiciels;
