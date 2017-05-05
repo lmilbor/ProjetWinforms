@@ -31,11 +31,11 @@
             this.menuGeneral = new System.Windows.Forms.MenuStrip();
             this.menuLogiciel = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGestionTaches = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTacheProd = new System.Windows.Forms.ToolStripMenuItem();
             this.menuTachesAnnexes = new System.Windows.Forms.ToolStripMenuItem();
             this.menuVerifTemps = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEchange = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.menuGeneral.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,12 +68,6 @@
             this.menuGestionTaches.Size = new System.Drawing.Size(112, 20);
             this.menuGestionTaches.Text = "Gestion de taches";
             // 
-            // menuWindows
-            // 
-            this.menuWindows.Name = "menuWindows";
-            this.menuWindows.Size = new System.Drawing.Size(63, 20);
-            this.menuWindows.Text = "Fenêtres";
-            // 
             // menuTacheProd
             // 
             this.menuTacheProd.Name = "menuTacheProd";
@@ -98,6 +92,12 @@
             this.menuEchange.Size = new System.Drawing.Size(69, 20);
             this.menuEchange.Text = "Echanges";
             // 
+            // menuWindows
+            // 
+            this.menuWindows.Name = "menuWindows";
+            this.menuWindows.Size = new System.Drawing.Size(63, 20);
+            this.menuWindows.Text = "Fenêtres";
+            // 
             // MDIForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -107,6 +107,7 @@
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuGeneral;
             this.Name = "MDIForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "JobOverview";
             this.menuGeneral.ResumeLayout(false);
             this.menuGeneral.PerformLayout();

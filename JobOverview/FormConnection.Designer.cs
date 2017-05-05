@@ -94,6 +94,7 @@
             this.MaximumSize = new System.Drawing.Size(300, 125);
             this.MinimumSize = new System.Drawing.Size(300, 125);
             this.Name = "FormConnexion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Connexion";
             this.ResumeLayout(false);
             this.PerformLayout();
