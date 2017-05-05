@@ -90,11 +90,12 @@ namespace JobOverview
                     else
                         throw new FormatException();
 
-                    TacheProd.Logiciel = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First();
-                    TacheProd.Module = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeModules.Where( m => m.CodeModule == cbModule.SelectedValue.ToString()).FirstOrDefault();
-                    TacheProd.Version = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Where(v => v.NumeroVersion == ((float)cbVersion.SelectedValue)).FirstOrDefault();
-                    TacheProd.Login = TempData.ListePersonne.Where( p => p.Login == cbPersonne.SelectedValue.ToString()).Select( p => p.Login).FirstOrDefault();
-                    TacheProd.Activite = TempData.ListeActivite.Where(a => a.CodeActivite == cbActivite.SelectedValue.ToString()).FirstOrDefault();
+                    Pers.Nom = cbPersonne.Text;
+                    Activite.CodeActivite = cbActivite.ValueMember;
+                    Activite.EstAnnexe = false;
+                    Module.CodeModule = cbModule.ValueMember;
+                    Version.NumeroVersion = float.Parse(cbVersion.Text);
+                    Logiciel.CodeLogiciel = cbLogiciel.ValueMember;
                 }
                 catch (FormatException)
                 {
