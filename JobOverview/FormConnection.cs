@@ -19,19 +19,22 @@ namespace JobOverview
         }
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(tbConnection.Text))
+            if (DialogResult.Equals(DialogResult.OK))
             {
-                if (DialogResult.Equals(DialogResult.OK))
+                if (!string.IsNullOrWhiteSpace(tbConnection.Text))
                 {
                     CahineDeConnexion = tbConnection.Text;
                     Properties.Settings.Default.ConnectionStringJobOverview = tbConnection.Text;
+
+                    base.OnClosing(e);
                 }
-                base.OnClosing(e);
+                else
+                {
+                    MessageBox.Show("Entrez une chaine de connexion avant de continuer.");
+                }
             }
-            else
-            {
-                MessageBox.Show("Entrez une chaine de connexion avant de continuer.");
-            }
+            else if (DialogResult.Equals(DialogResult.Abort))
+                Application.Exit();
         }
     }
 }
