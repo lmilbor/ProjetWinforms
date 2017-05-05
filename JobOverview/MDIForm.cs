@@ -33,6 +33,8 @@ namespace JobOverview
                 } while (string.IsNullOrWhiteSpace(form.CahineDeConnexion));
                 }
             //}
+            TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
+            TempData.ListePersonne = DALTache.GetListePersonne();
             base.OnLoad(e);
         }
 

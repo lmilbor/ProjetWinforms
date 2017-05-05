@@ -12,7 +12,6 @@ namespace JobOverview
 {
     public partial class FormLogiciel : Form
     {
-        private BindingList<Logiciel> _listeLogiciels;
         private List<Version> _AjouterVersion;
         private List<Version> _SupprimerVersion;
         public FormLogiciel()
@@ -27,7 +26,9 @@ namespace JobOverview
         private void BtnEnregister_Click(object sender, EventArgs e)
         {
             DALLogiciel.InsertVersion(_AjouterVersion);
+            _AjouterVersion.Clear();
             DALLogiciel.RemoveVersion(_SupprimerVersion);
+            _SupprimerVersion.Clear();
         }
 
         private void BtnNewVersion_Click(object sender, EventArgs e)
@@ -37,7 +38,7 @@ namespace JobOverview
                 form.ShowDialog();
                 if (form.DialogResult.Equals(DialogResult.OK))
                 {
-                    _listeLogiciels.Where(l => l.Nom == form.Nom).First().ListeVersions.Add(form.version);
+                    TempData.ListeLogiciel.Where(l => l.CodeLogiciel == form.version.CodeLogiciel).First().ListeVersions.Add(form.version);
                     _AjouterVersion.Add(form.version);
                 }
             }
@@ -45,30 +46,29 @@ namespace JobOverview
         private void BtnSupVersion_Click(object sender, EventArgs e)
         {
             Version version = (Version)(dgvVersion.CurrentRow.DataBoundItem);
-            if (!_AjouterVersion.Contains<Version>(version))
-            //{
-            //    foreach (var personne in TempData.ListePersonne)
-            //    {
-            //        foreach (var tache in personne.ListeTacheProd)
-            //        {
-            //            if (!tache.Version.Equals(version))
-            //            {
-                            _SupprimerVersion.Add(version);
-            //            }
-            //        }
-            //    }
-            //}
-            else
-                _AjouterVersion.Remove(version);
+            if (!(TempData.ListePersonne.Select(p => p.ListeTacheProd.Select(t => t.Version).Contains<Version>(version))).First())
+            // Si aucune tache ne fait référence à la version à supprimer.
+            {
+                if (!(_AjouterVersion.Contains<Version>(version)))
+                {
+                    _SupprimerVersion.Add(version);
+                }
+                else
+                {
+                    _AjouterVersion.Remove(version);
+                }
 
-            _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Remove(version);
+                TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Remove(version);
+            }
+            else
+                MessageBox.Show("La version que vous souhaitez supprimer a encore une ou plusieurs taches de production liés");
         }
 
         private void CbLogiciel_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            dgvVersion.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
+            dgvVersion.DataSource = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
                 ListeVersions;
-            dgvModule.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
+            dgvModule.DataSource = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().
                 ListeModules;
         }
 
@@ -76,13 +76,11 @@ namespace JobOverview
         {
             _AjouterVersion = new List<Version>();
             _SupprimerVersion = new List<Version>();
-            TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
-            _listeLogiciels = TempData.ListeLogiciel;
-            cbLogiciel.DataSource = _listeLogiciels;
+            cbLogiciel.DataSource = TempData.ListeLogiciel;
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
-            dgvVersion.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == _listeLogiciels.First().CodeLogiciel).First().ListeVersions;
-            dgvModule.DataSource = _listeLogiciels.Where(l => l.CodeLogiciel == _listeLogiciels.First().CodeLogiciel).First().ListeModules;
+            dgvVersion.DataSource = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == TempData.ListeLogiciel.First().CodeLogiciel).First().ListeVersions;
+            dgvModule.DataSource = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == TempData.ListeLogiciel.First().CodeLogiciel).First().ListeModules;
             base.OnLoad(e);
         }
     }

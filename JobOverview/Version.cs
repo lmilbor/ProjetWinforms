@@ -18,7 +18,7 @@ namespace JobOverview
         bool IEquatable<Version>.Equals(Version other)
         {
             if (other == null) return false;
-            if (NumeroVersion == other.NumeroVersion) return true;
+            if (NumeroVersion == other.NumeroVersion && CodeLogiciel == other.CodeLogiciel) return true;
             return false;
         }
     }
