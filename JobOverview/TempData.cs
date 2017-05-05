@@ -17,10 +17,20 @@ namespace JobOverview
         #endregion
 
         #region Méthodes publiques
+        /// <summary>
+        /// Retourne la liste des tache de production propre à une personne.
+        /// </summary>
+        /// <param name="personne">Personne dont on veut la liste de tache.</param>
+        /// <returns></returns>
         static public List<TacheProd> GetListeTacheProd(Personne personne)
         {
             return ListePersonne.Where(p => p.Equals(personne)).FirstOrDefault().ListeTacheProd.ToList();
         }
+        /// <summary>
+        /// Retourne la liste des tache de production propre à une personne.
+        /// </summary>
+        /// <param name="login">Login de la personne dont on veut la liste de tache.</param>
+        /// <returns></returns>
         static public List<TacheProd> GetListeTacheProd(string login)
         {
             return ListePersonne.Where(p => p.Login == login).FirstOrDefault().ListeTacheProd.ToList();
