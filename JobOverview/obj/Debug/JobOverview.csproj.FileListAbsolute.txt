@@ -26,3 +26,4 @@ D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormL
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormLogiciel.resources
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieVersion.resources
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieVersion.resources
+C:\Users\Ben\Source\Repos\ProjetWinforms\JobOverview\bin\Debug\JobOverview.exe.config
