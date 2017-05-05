@@ -70,6 +70,7 @@
             this.btnAnnuler.TabIndex = 3;
             this.btnAnnuler.Text = "Annuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
+            this.btnAnnuler.Visible = false;
             // 
             // btnQuitter
             // 

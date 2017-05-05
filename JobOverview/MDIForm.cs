@@ -19,8 +19,9 @@ namespace JobOverview
             menuTacheProd.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormTacheProd");
             menuTachesAnnexes.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormSaisieTacheAnnexe");
             menuVerifTemps.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormVerifTemps");
-            //menuEchange.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormEchange");
+
         }
+
         protected override void OnLoad(EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ConnectionStringJobOverview))
