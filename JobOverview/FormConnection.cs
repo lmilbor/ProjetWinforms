@@ -12,7 +12,7 @@ namespace JobOverview
 {
     public partial class FormConnexion : Form
     {
-        public string CahineDeConnexion { get; set; }
+        public string ChaineDeConnexion { get; set; }
         public FormConnexion()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace JobOverview
             {
                 if (!string.IsNullOrWhiteSpace(tbConnection.Text))
                 {
-                    CahineDeConnexion = tbConnection.Text;
+                    ChaineDeConnexion = tbConnection.Text;
                     Properties.Settings.Default.ConnectionStringJobOverview = tbConnection.Text;
 
                     base.OnClosing(e);
@@ -35,6 +35,11 @@ namespace JobOverview
             }
             else if (DialogResult.Equals(DialogResult.Abort))
                 Application.Exit();
+        }
+
+        static public void ConnectionTestUnitaire(string chaineConnexion)
+        {
+            Properties.Settings.Default.ConnectionStringJobOverview = chaineConnexion;
         }
     }
 }
