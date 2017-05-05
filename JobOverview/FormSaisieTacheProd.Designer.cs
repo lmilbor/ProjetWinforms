@@ -31,7 +31,6 @@
             this.mtbDureePrevue = new System.Windows.Forms.MaskedTextBox();
             this.lblDatePrevue = new System.Windows.Forms.Label();
             this.lblDureeRestante = new System.Windows.Forms.Label();
-            this.lblNumero = new System.Windows.Forms.Label();
             this.cbLogiciel = new System.Windows.Forms.ComboBox();
             this.cbVersion = new System.Windows.Forms.ComboBox();
             this.cbModule = new System.Windows.Forms.ComboBox();
@@ -46,7 +45,6 @@
             this.lblDescription = new System.Windows.Forms.Label();
             this.btnAnnuler = new System.Windows.Forms.Button();
             this.btnValider = new System.Windows.Forms.Button();
-            this.mtbNumero = new System.Windows.Forms.MaskedTextBox();
             this.cbPersonne = new System.Windows.Forms.ComboBox();
             this.lblPersonne = new System.Windows.Forms.Label();
             this.lblresDureeRestante = new System.Windows.Forms.Label();
@@ -58,7 +56,7 @@
             this.mtbDureePrevue.Mask = "99.9";
             this.mtbDureePrevue.Name = "mtbDureePrevue";
             this.mtbDureePrevue.Size = new System.Drawing.Size(118, 20);
-            this.mtbDureePrevue.TabIndex = 0;
+            this.mtbDureePrevue.TabIndex = 6;
             // 
             // lblDatePrevue
             // 
@@ -78,22 +76,13 @@
             this.lblDureeRestante.TabIndex = 1;
             this.lblDureeRestante.Text = "Durée restante estimée";
             // 
-            // lblNumero
-            // 
-            this.lblNumero.AutoSize = true;
-            this.lblNumero.Location = new System.Drawing.Point(185, 32);
-            this.lblNumero.Name = "lblNumero";
-            this.lblNumero.Size = new System.Drawing.Size(50, 13);
-            this.lblNumero.TabIndex = 2;
-            this.lblNumero.Text = "Numéro :";
-            // 
             // cbLogiciel
             // 
             this.cbLogiciel.FormattingEnabled = true;
             this.cbLogiciel.Location = new System.Drawing.Point(15, 170);
             this.cbLogiciel.Name = "cbLogiciel";
             this.cbLogiciel.Size = new System.Drawing.Size(118, 21);
-            this.cbLogiciel.TabIndex = 3;
+            this.cbLogiciel.TabIndex = 5;
             // 
             // cbVersion
             // 
@@ -101,7 +90,7 @@
             this.cbVersion.Location = new System.Drawing.Point(15, 217);
             this.cbVersion.Name = "cbVersion";
             this.cbVersion.Size = new System.Drawing.Size(118, 21);
-            this.cbVersion.TabIndex = 3;
+            this.cbVersion.TabIndex = 7;
             // 
             // cbModule
             // 
@@ -109,7 +98,7 @@
             this.cbModule.Location = new System.Drawing.Point(173, 123);
             this.cbModule.Name = "cbModule";
             this.cbModule.Size = new System.Drawing.Size(117, 21);
-            this.cbModule.TabIndex = 3;
+            this.cbModule.TabIndex = 4;
             // 
             // lblLogiciel
             // 
@@ -143,7 +132,7 @@
             this.tbLibelle.Location = new System.Drawing.Point(15, 73);
             this.tbLibelle.Name = "tbLibelle";
             this.tbLibelle.Size = new System.Drawing.Size(276, 20);
-            this.tbLibelle.TabIndex = 4;
+            this.tbLibelle.TabIndex = 2;
             // 
             // lblLibelle
             // 
@@ -160,7 +149,7 @@
             this.cbActivite.Location = new System.Drawing.Point(15, 123);
             this.cbActivite.Name = "cbActivite";
             this.cbActivite.Size = new System.Drawing.Size(118, 21);
-            this.cbActivite.TabIndex = 5;
+            this.cbActivite.TabIndex = 3;
             // 
             // lblActivite
             // 
@@ -176,7 +165,7 @@
             this.rtbDescription.Location = new System.Drawing.Point(15, 262);
             this.rtbDescription.Name = "rtbDescription";
             this.rtbDescription.Size = new System.Drawing.Size(274, 100);
-            this.rtbDescription.TabIndex = 6;
+            this.rtbDescription.TabIndex = 8;
             this.rtbDescription.Text = "";
             // 
             // lblDescription
@@ -184,9 +173,9 @@
             this.lblDescription.AutoSize = true;
             this.lblDescription.Location = new System.Drawing.Point(14, 247);
             this.lblDescription.Name = "lblDescription";
-            this.lblDescription.Size = new System.Drawing.Size(60, 13);
+            this.lblDescription.Size = new System.Drawing.Size(109, 13);
             this.lblDescription.TabIndex = 7;
-            this.lblDescription.Text = "Description";
+            this.lblDescription.Text = "Description (facultatif)";
             // 
             // btnAnnuler
             // 
@@ -194,7 +183,7 @@
             this.btnAnnuler.Location = new System.Drawing.Point(166, 373);
             this.btnAnnuler.Name = "btnAnnuler";
             this.btnAnnuler.Size = new System.Drawing.Size(120, 39);
-            this.btnAnnuler.TabIndex = 8;
+            this.btnAnnuler.TabIndex = 10;
             this.btnAnnuler.Text = "Annuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
             // 
@@ -204,18 +193,9 @@
             this.btnValider.Location = new System.Drawing.Point(17, 373);
             this.btnValider.Name = "btnValider";
             this.btnValider.Size = new System.Drawing.Size(127, 39);
-            this.btnValider.TabIndex = 8;
+            this.btnValider.TabIndex = 9;
             this.btnValider.Text = "Valider";
             this.btnValider.UseVisualStyleBackColor = true;
-            // 
-            // mtbNumero
-            // 
-            this.mtbNumero.Location = new System.Drawing.Point(243, 32);
-            this.mtbNumero.Mask = "99999";
-            this.mtbNumero.Name = "mtbNumero";
-            this.mtbNumero.Size = new System.Drawing.Size(48, 20);
-            this.mtbNumero.TabIndex = 9;
-            this.mtbNumero.ValidatingType = typeof(int);
             // 
             // cbPersonne
             // 
@@ -223,7 +203,7 @@
             this.cbPersonne.Location = new System.Drawing.Point(15, 32);
             this.cbPersonne.Name = "cbPersonne";
             this.cbPersonne.Size = new System.Drawing.Size(118, 21);
-            this.cbPersonne.TabIndex = 10;
+            this.cbPersonne.TabIndex = 1;
             // 
             // lblPersonne
             // 
@@ -239,9 +219,8 @@
             this.lblresDureeRestante.AutoSize = true;
             this.lblresDureeRestante.Location = new System.Drawing.Point(172, 225);
             this.lblresDureeRestante.Name = "lblresDureeRestante";
-            this.lblresDureeRestante.Size = new System.Drawing.Size(35, 13);
+            this.lblresDureeRestante.Size = new System.Drawing.Size(0, 13);
             this.lblresDureeRestante.TabIndex = 11;
-            this.lblresDureeRestante.Text = "label1";
             // 
             // FormSaisieTacheProd
             // 
@@ -250,7 +229,6 @@
             this.ClientSize = new System.Drawing.Size(301, 422);
             this.Controls.Add(this.lblresDureeRestante);
             this.Controls.Add(this.cbPersonne);
-            this.Controls.Add(this.mtbNumero);
             this.Controls.Add(this.btnValider);
             this.Controls.Add(this.btnAnnuler);
             this.Controls.Add(this.lblDescription);
@@ -260,7 +238,6 @@
             this.Controls.Add(this.cbModule);
             this.Controls.Add(this.cbVersion);
             this.Controls.Add(this.cbLogiciel);
-            this.Controls.Add(this.lblNumero);
             this.Controls.Add(this.lblModule);
             this.Controls.Add(this.lblVersion);
             this.Controls.Add(this.lblLogiciel);
@@ -285,7 +262,6 @@
         private System.Windows.Forms.MaskedTextBox mtbDureePrevue;
         private System.Windows.Forms.Label lblDatePrevue;
         private System.Windows.Forms.Label lblDureeRestante;
-        private System.Windows.Forms.Label lblNumero;
         private System.Windows.Forms.ComboBox cbLogiciel;
         private System.Windows.Forms.ComboBox cbVersion;
         private System.Windows.Forms.ComboBox cbModule;
@@ -300,7 +276,6 @@
         private System.Windows.Forms.Label lblDescription;
         private System.Windows.Forms.Button btnAnnuler;
         private System.Windows.Forms.Button btnValider;
-        private System.Windows.Forms.MaskedTextBox mtbNumero;
         private System.Windows.Forms.ComboBox cbPersonne;
         private System.Windows.Forms.Label lblPersonne;
         private System.Windows.Forms.Label lblresDureeRestante;

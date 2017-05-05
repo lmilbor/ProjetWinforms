@@ -67,7 +67,7 @@
             this.btnAnnuler.Location = new System.Drawing.Point(106, 51);
             this.btnAnnuler.Name = "btnAnnuler";
             this.btnAnnuler.Size = new System.Drawing.Size(75, 23);
-            this.btnAnnuler.TabIndex = 3;
+            this.btnAnnuler.TabIndex = 2;
             this.btnAnnuler.Text = "Annuler";
             this.btnAnnuler.UseVisualStyleBackColor = true;
             this.btnAnnuler.Visible = false;
@@ -78,7 +78,7 @@
             this.btnQuitter.Location = new System.Drawing.Point(197, 51);
             this.btnQuitter.Name = "btnQuitter";
             this.btnQuitter.Size = new System.Drawing.Size(75, 23);
-            this.btnQuitter.TabIndex = 4;
+            this.btnQuitter.TabIndex = 3;
             this.btnQuitter.Text = "Quitter";
             this.btnQuitter.UseVisualStyleBackColor = true;
             // 

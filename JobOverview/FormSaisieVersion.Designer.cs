@@ -101,7 +101,7 @@
             this.mtbDateOuverture.Mask = "00/00/0000";
             this.mtbDateOuverture.Name = "mtbDateOuverture";
             this.mtbDateOuverture.Size = new System.Drawing.Size(100, 20);
-            this.mtbDateOuverture.TabIndex = 8;
+            this.mtbDateOuverture.TabIndex = 1;
             this.mtbDateOuverture.ValidatingType = typeof(System.DateTime);
             // 
             // mtbDateSortie
@@ -110,7 +110,7 @@
             this.mtbDateSortie.Mask = "00/00/0000";
             this.mtbDateSortie.Name = "mtbDateSortie";
             this.mtbDateSortie.Size = new System.Drawing.Size(100, 20);
-            this.mtbDateSortie.TabIndex = 9;
+            this.mtbDateSortie.TabIndex = 2;
             this.mtbDateSortie.ValidatingType = typeof(System.DateTime);
             // 
             // btnOK
@@ -119,7 +119,7 @@
             this.btnOK.Location = new System.Drawing.Point(12, 150);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 23);
-            this.btnOK.TabIndex = 10;
+            this.btnOK.TabIndex = 5;
             this.btnOK.Text = "Valider";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
@@ -129,7 +129,7 @@
             this.btnCancel.Location = new System.Drawing.Point(174, 150);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(95, 23);
-            this.btnCancel.TabIndex = 11;
+            this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Annuler";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
@@ -139,7 +139,7 @@
             this.mtbNumVersion.Mask = "00.00";
             this.mtbNumVersion.Name = "mtbNumVersion";
             this.mtbNumVersion.Size = new System.Drawing.Size(35, 20);
-            this.mtbNumVersion.TabIndex = 12;
+            this.mtbNumVersion.TabIndex = 3;
             // 
             // mtbMillesime
             // 
@@ -147,7 +147,7 @@
             this.mtbMillesime.Mask = "0000";
             this.mtbMillesime.Name = "mtbMillesime";
             this.mtbMillesime.Size = new System.Drawing.Size(33, 20);
-            this.mtbMillesime.TabIndex = 13;
+            this.mtbMillesime.TabIndex = 4;
             // 
             // FormSaisieVersion
             // 

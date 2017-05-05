@@ -13,7 +13,7 @@ namespace JobOverview
     public partial class FormTacheProd : Form
     {
         #region Champs Privés
-        private BindingList<TacheProd> _listeNouvelleTacheProd;
+        private List<TacheProd> _listeNouvelleTacheProd;
         #endregion
 
         public FormTacheProd()
@@ -22,7 +22,7 @@ namespace JobOverview
             cbPersonne.SelectionChangeCommitted += CbPersonne_SelectionChangeCommitted;
             btnAjout.Click += BtnAjout_Click;
             btnEnregistrer.Click += (object sender, EventArgs e) => DALTache.InsertTacheProd(_listeNouvelleTacheProd);
-            dgvTacheProd.CellMouseClick += (object sender, DataGridViewCellMouseEventArgs e) => tbDescripTache.Text = ((TacheProd)dgvTacheProd.CurrentRow.DataBoundItem).Libelle;
+            dgvTacheProd.CellMouseClick += (object sender, DataGridViewCellMouseEventArgs e) => tbDescripTache.Text = ((TacheProd)dgvTacheProd.CurrentRow.DataBoundItem).Description;
             cbLogiciel.SelectionChangeCommitted += CbLogiciel_SelectionChangeCommitted;
             cbVersion.SelectionChangeCommitted += CbVersion_SelectionChangeCommitted;
         }
@@ -62,7 +62,7 @@ namespace JobOverview
         protected override void OnLoad(EventArgs e)
         {
 
-            _listeNouvelleTacheProd = new BindingList<TacheProd>();
+            _listeNouvelleTacheProd = new List<TacheProd>();
 
             // Initialisation des combo box
             //Combo Box Logiciel
