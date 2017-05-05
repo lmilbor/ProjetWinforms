@@ -110,6 +110,9 @@
     <EmbeddedResource Include="FormLogiciel.resx">
       <DependentUpon>FormLogiciel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSaisieTacheAnnexe.resx">
+      <DependentUpon>FormSaisieTacheAnnexe.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSaisieTacheProd.resx">
       <DependentUpon>FormSaisieTacheProd.cs</DependentUpon>
     </EmbeddedResource>
@@ -118,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormTacheProd.resx">
       <DependentUpon>FormTacheProd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormVerifTemps.resx">
+      <DependentUpon>FormVerifTemps.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MDIForm.resx">
       <DependentUpon>MDIForm.cs</DependentUpon>

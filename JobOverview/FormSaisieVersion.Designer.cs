@@ -118,7 +118,7 @@
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(12, 150);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
+            this.btnOK.Size = new System.Drawing.Size(100, 23);
             this.btnOK.TabIndex = 10;
             this.btnOK.Text = "Valider";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -126,9 +126,9 @@
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(150, 150);
+            this.btnCancel.Location = new System.Drawing.Point(174, 150);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.Size = new System.Drawing.Size(95, 23);
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Annuler";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -166,9 +166,11 @@
             this.Controls.Add(this.lblNumVersion);
             this.Controls.Add(this.lblLogiciel);
             this.Controls.Add(this.cbLogiciel);
+            this.Location = new System.Drawing.Point(200, 200);
             this.MaximumSize = new System.Drawing.Size(302, 227);
             this.MinimumSize = new System.Drawing.Size(302, 227);
             this.Name = "FormSaisieVersion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Ajouter une nouvelle version";
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -273,6 +273,7 @@
             this.Location = new System.Drawing.Point(317, 461);
             this.MaximumSize = new System.Drawing.Size(317, 461);
             this.Name = "FormSaisieTacheProd";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Nouvelle tache de production";
             this.ResumeLayout(false);
             this.PerformLayout();

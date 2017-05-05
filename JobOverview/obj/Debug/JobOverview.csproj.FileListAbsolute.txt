@@ -27,3 +27,5 @@ D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Deb
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieVersion.resources
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieVersion.resources
 C:\Users\Ben\Source\Repos\ProjetWinforms\JobOverview\bin\Debug\JobOverview.exe.config
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieTacheAnnexe.resources
+D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormVerifTemps.resources

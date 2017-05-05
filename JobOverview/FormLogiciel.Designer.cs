@@ -145,6 +145,7 @@
             this.Controls.Add(this.btnNewVersion);
             this.Controls.Add(this.cbLogiciel);
             this.Name = "FormLogiciel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormGestionLogiciel";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvModule)).EndInit();

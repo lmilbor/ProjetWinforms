@@ -17,7 +17,6 @@ namespace JobOverview
         {
             version = new Version();
             InitializeComponent();
-            btnOK.Click += BtnOK_Click;
         }
         protected override void OnLoad(EventArgs e)
         {
@@ -27,13 +26,47 @@ namespace JobOverview
             base.OnLoad(e);
         }
 
-        private void BtnOK_Click(object sender, EventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
-            version.CodeLogiciel = cbLogiciel.SelectedValue.ToString();
-            version.NumeroVersion = float.Parse(mtbNumVersion.Text);
-            version.DateOuverture = DateTime.Parse(mtbDateOuverture.Text);
-            version.DateSortiePrevue = DateTime.Parse(mtbDateSortie.Text);
-            version.Millesime = short.Parse(mtbMillesime.Text);
+            try
+            {
+                if (DialogResult == DialogResult.OK)
+                {
+                    if (!string.IsNullOrWhiteSpace(cbLogiciel.Text))
+                        version.CodeLogiciel = cbLogiciel.SelectedValue.ToString();
+                    else
+                        throw new ArgumentNullException();
+
+                    string tempString = mtbNumVersion.Text.Replace(",", "");
+                    if (!string.IsNullOrWhiteSpace(tempString))
+                        version.NumeroVersion = float.Parse(mtbNumVersion.Text);
+                    else
+                        throw new ArgumentNullException();
+
+                    tempString = mtbDateOuverture.Text.Replace("/", "");
+                    if (!string.IsNullOrWhiteSpace(tempString))
+                        version.DateOuverture = DateTime.Parse(mtbDateOuverture.Text);
+                    else
+                        throw new ArgumentNullException();
+
+                    tempString = mtbDateSortie.Text.Replace("/", "");
+                    if (!string.IsNullOrWhiteSpace(tempString))
+                        version.DateSortiePrevue = DateTime.Parse(mtbDateSortie.Text);
+                    else
+                        throw new ArgumentNullException();
+
+                    if (!string.IsNullOrWhiteSpace(mtbMillesime.Text))
+                        version.Millesime = short.Parse(mtbMillesime.Text);
+                    else
+                        throw new ArgumentNullException(); 
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                MessageBox.Show("Veuillez remplir tous les champs.");
+                e.Cancel = true;
+            }
+            base.OnClosing(e);
         }
     }
 }

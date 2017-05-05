@@ -63,10 +63,10 @@ namespace JobOverview
             cbPersonne.ValueMember = "Login";
             cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList();
 
-            if ((TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Where( tp => tp.Version.Equals() && tp.Logiciel.Equals() && tp.Module.Equals(module)).Count != 0)) // Si il existe déjà des tache de Production pour la personne, logiciel, module et version renseignée.
-                mtbNumero.Text = (TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Select(tp => tp.Numero).Max() + 1).ToString();
-            else
-                mtbNumero.Text = "1";
+            //if ((TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Where( tp => tp.Version.Equals() && tp.Logiciel.Equals() && tp.Module.Equals(module)).Count != 0)) // Si il existe déjà des tache de Production pour la personne, logiciel, module et version renseignée.
+            //    mtbNumero.Text = (TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Select(tp => tp.Numero).Max() + 1).ToString();
+            //else
+            //    mtbNumero.Text = "1";
             base.OnLoad(e);
         }
 
@@ -92,17 +92,17 @@ namespace JobOverview
                         TacheProd.DureeRestanteEstimee = float.Parse(mtbDureePrevue.Text);
                     }
                     else
-                        throw new FormatException();
+                        throw new ArgumentNullException();
 
                     if (!string.IsNullOrWhiteSpace(tbLibelle.Text))
                         TacheProd.Libelle = tbLibelle.Text;
                     else
-                        throw new FormatException();
+                        throw new ArgumentNullException();
 
                     if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
                         TacheProd.Numero = int.Parse(mtbNumero.Text);
                     else
-                        throw new FormatException();
+                        throw new ArgumentNullException();
 
                     TacheProd.Logiciel = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First();
                     TacheProd.Module = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeModules.Where(m => m.CodeModule == cbModule.SelectedValue.ToString()).FirstOrDefault();
@@ -110,7 +110,7 @@ namespace JobOverview
                     TacheProd.Login = TempData.ListePersonne.Where(p => p.Login == cbPersonne.SelectedValue.ToString()).Select(p => p.Login).FirstOrDefault();
                     TacheProd.Activite = TempData.ListeActivite.Where(a => a.CodeActivite == cbActivite.SelectedValue.ToString()).FirstOrDefault();
                 }
-                catch (FormatException)
+                catch (ArgumentNullException)
                 {
                     MessageBox.Show("Veuillez remplir tous les champs. Seul le champ description est falcultatif.");
                     e.Cancel = true;

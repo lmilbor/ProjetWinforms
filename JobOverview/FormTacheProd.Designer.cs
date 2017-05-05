@@ -174,6 +174,7 @@
             this.Controls.Add(this.cbLogiciel);
             this.Controls.Add(this.cbPersonne);
             this.Name = "FormTacheProd";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormTacheProd";
             ((System.ComponentModel.ISupportInitialize)(this.dgvTacheProd)).EndInit();
             this.ResumeLayout(false);
