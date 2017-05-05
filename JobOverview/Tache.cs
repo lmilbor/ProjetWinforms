@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JobOverview
 {
-    public class Tache
+    public class Tache : IEquatable<Tache>
     {
         public Guid IdTache { get; set; }
         public string Libelle { get; set; }
@@ -17,6 +17,13 @@ namespace JobOverview
         public bool EstAnnexe { get; set; }
         public Activité Activite { get; set; }
         public string Description { get; set; }
+
+        bool IEquatable<Tache>.Equals(Tache other)
+        {
+            if (other == null) return false;
+            if (other.IdTache == this.IdTache) return true;
+            else return false;
+        }
     }
 
     public class TacheProd : Tache
