@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.mtbDureePrevue = new System.Windows.Forms.MaskedTextBox();
-            this.mtbDureeRestante = new System.Windows.Forms.MaskedTextBox();
             this.lblDatePrevue = new System.Windows.Forms.Label();
             this.lblDureeRestante = new System.Windows.Forms.Label();
             this.lblNumero = new System.Windows.Forms.Label();
@@ -50,6 +49,7 @@
             this.mtbNumero = new System.Windows.Forms.MaskedTextBox();
             this.cbPersonne = new System.Windows.Forms.ComboBox();
             this.lblPersonne = new System.Windows.Forms.Label();
+            this.lblresDureeRestante = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // mtbDureePrevue
@@ -59,14 +59,6 @@
             this.mtbDureePrevue.Name = "mtbDureePrevue";
             this.mtbDureePrevue.Size = new System.Drawing.Size(118, 20);
             this.mtbDureePrevue.TabIndex = 0;
-            // 
-            // mtbDureeRestante
-            // 
-            this.mtbDureeRestante.Location = new System.Drawing.Point(173, 218);
-            this.mtbDureeRestante.Mask = "99.9";
-            this.mtbDureeRestante.Name = "mtbDureeRestante";
-            this.mtbDureeRestante.Size = new System.Drawing.Size(117, 20);
-            this.mtbDureeRestante.TabIndex = 0;
             // 
             // lblDatePrevue
             // 
@@ -242,11 +234,21 @@
             this.lblPersonne.TabIndex = 1;
             this.lblPersonne.Text = "Personne";
             // 
+            // lblresDureeRestante
+            // 
+            this.lblresDureeRestante.AutoSize = true;
+            this.lblresDureeRestante.Location = new System.Drawing.Point(172, 225);
+            this.lblresDureeRestante.Name = "lblresDureeRestante";
+            this.lblresDureeRestante.Size = new System.Drawing.Size(35, 13);
+            this.lblresDureeRestante.TabIndex = 11;
+            this.lblresDureeRestante.Text = "label1";
+            // 
             // FormSaisieTacheProd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(301, 422);
+            this.Controls.Add(this.lblresDureeRestante);
             this.Controls.Add(this.cbPersonne);
             this.Controls.Add(this.mtbNumero);
             this.Controls.Add(this.btnValider);
@@ -267,7 +269,6 @@
             this.Controls.Add(this.lblPersonne);
             this.Controls.Add(this.lblLibelle);
             this.Controls.Add(this.lblDatePrevue);
-            this.Controls.Add(this.mtbDureeRestante);
             this.Controls.Add(this.mtbDureePrevue);
             this.Location = new System.Drawing.Point(317, 461);
             this.MaximumSize = new System.Drawing.Size(317, 461);
@@ -281,7 +282,6 @@
         #endregion
 
         private System.Windows.Forms.MaskedTextBox mtbDureePrevue;
-        private System.Windows.Forms.MaskedTextBox mtbDureeRestante;
         private System.Windows.Forms.Label lblDatePrevue;
         private System.Windows.Forms.Label lblDureeRestante;
         private System.Windows.Forms.Label lblNumero;
@@ -302,5 +302,6 @@
         private System.Windows.Forms.MaskedTextBox mtbNumero;
         private System.Windows.Forms.ComboBox cbPersonne;
         private System.Windows.Forms.Label lblPersonne;
+        private System.Windows.Forms.Label lblresDureeRestante;
     }
 }
