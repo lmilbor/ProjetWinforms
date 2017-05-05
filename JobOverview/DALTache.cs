@@ -84,20 +84,34 @@ namespace JobOverview
                 tache.IdTache = (Guid)reader["IdTache"];
                 tache.Libelle = (string)reader["Libelle"];
                 tache.EstAnnexe = (bool)reader["EstAnnexe"];
-                tache.Description = (string)reader["Description"];
+                if (reader["Description"] != DBNull.Value)
+                    tache.Description = (string)reader["Description"];
+                else
+                    tache.Description = null;
 
                 // Si c'est une tache de production
                 if (!estAnnexe)
                 {
-                    // Transtypage de la tache en tache de production
-                    ((TacheProd)tache).Numero = (int)reader["Numero"];
-                    ((TacheProd)tache).DureePrevue = (float)reader["DureePrevue"];
-                    ((TacheProd)tache).DureeRestanteEstimee = (float)reader["DureeRestanteEstimee"];
-                    ((TacheProd)tache).Version.NumeroVersion = (float)reader["Version"];
-                    ((TacheProd)tache).Logiciel.Nom = (string)reader["Logiciel"];
-                    ((TacheProd)tache).Module.Libellé = (string)reader["Module"];
+                    TacheProd tacheProd = new TacheProd();
+                    tacheProd.Activite = new Activité();
+                    tacheProd.Logiciel = new Logiciel();
+                    tacheProd.Module = new Module();
 
-                    personne.ListeTacheProd.Add((TacheProd)tache);
+                    // On remplis les valeurs avec celles déjà obtenue en tant que Tache.
+                    tacheProd.IdTache = tache.IdTache;
+                    tacheProd.Libelle = tache.Libelle;
+                    tache.EstAnnexe = tache.EstAnnexe;
+                    tacheProd.Description = tache.Description;
+
+                    // Transtypage de la tache en tache de production
+                    tacheProd.Numero = (int)reader["Numero"];
+                    tacheProd.DureePrevue = (float)reader["DureePrevue"];
+                    tacheProd.DureeRestanteEstimee = (float)reader["DureeRestanteEstimee"];
+                    tacheProd.Version.NumeroVersion = (float)reader["Version"];
+                    tacheProd.Logiciel.Nom = (string)reader["Logiciel"];
+                    tacheProd.Module.Libellé = (string)reader["Module"];
+
+                    personne.ListeTacheProd.Add(tacheProd);
                 }
                 else
                     personne.ListeTacheAnnexe.Add(tache);
@@ -142,7 +156,7 @@ namespace JobOverview
                 activ.CodeActivite = (string)reader["CodeActivite"];
                 activ.Libelle = (string)reader["Libelle"];
                 activ.EstAnnexe = (bool)reader["Annexe"];
-                ListeActivite.Add(activ); 
+                ListeActivite.Add(activ);
             }
             return ListeActivite;
         }
@@ -188,31 +202,104 @@ namespace JobOverview
             return ListeModule;
         }
 
-        public static void InsertTacheProd(BindingList<TacheProd> ListeTacheProd)
+        public static void InsertTache(List<Tache> ListeTache)
         {
             //Création d'une chaine de connection
             string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
 
             //Création de string correspondant aux requêtes SQL
-            string queryString1 = @"insert jo.TacheProd(IdTache, Numero, DureePrevue, DureeRestanteEstimee,
-                                   CodeModule, CodeLogicieModule, NumeroVersion, CodeLogicielVersion)
-                                   select IdTache, Numero, DureePrevue, DureeRestanteEstimee, CodeModule, 
-                                   CodeLogicielModule, NumeroVersion, CodeLogicielVersion from @TacheProd";
+            string queryString2 = @"INSERT jo.Tache(Libelle, Annexe, CodeActivite, Login, Description)
+                                   SELECT Libelle, EstAnnexe, CodeActivite, Login, Description FROM @Tache";
 
-            string queryString2 = @"insert jo.Tache(IdTache, Libelle, Annexe, CodeActivite, Login, Description)
-                                   select IdTache, Libelle, EstAnnexe, CodeActivite, Login, Description from @Tache";
+            //Création du paramètre de la requete SQL
+            var param2 = new SqlParameter("@Tache", SqlDbType.Structured);
+
+            //Appelle de la méthode gérant la création de la table intermédiaire
+
+            DataTable tableTache = InsertTacheWithDatatable(ListeTache);
+            param2.TypeName = "TypeTableTache";
+            param2.Value = tableTache;
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                connect.Open();
+                SqlTransaction tran = connect.BeginTransaction();
+
+                try
+                {
+                    var command2 = new SqlCommand(queryString2, connect, tran);
+                    command2.Parameters.Add(param2);
+                    command2.ExecuteNonQuery();
+
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    tran.Rollback();
+                    throw;
+                }
+            }
+        }
+        public static void InsertTache(List<TacheProd> ListeTache)
+        {
+            //Création d'une chaine de connection
+            string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+
+            //Création de string correspondant aux requêtes SQL
+            string queryString2 = @"INSERT jo.Tache(IdTache, Libelle, Annexe, CodeActivite, Login, Description)
+                                   SELECT IdTache, Libelle, EstAnnexe, CodeActivite, Login, Description FROM @Tache";
+
+            //Création du paramètre de la requete SQL
+            var param2 = new SqlParameter("@Tache", SqlDbType.Structured);
+
+            //Appelle de la méthode gérant la création de la table intermédiaire
+
+            DataTable tableTache = InsertTacheWithDatatable(ListeTache);
+            param2.TypeName = "TypeTableTache";
+            param2.Value = tableTache;
+
+            using (var connect = new SqlConnection(connectString))
+            {
+                connect.Open();
+                SqlTransaction tran = connect.BeginTransaction();
+
+                try
+                {
+                    var command2 = new SqlCommand(queryString2, connect, tran);
+                    command2.Parameters.Add(param2);
+                    command2.ExecuteNonQuery();
+
+                    tran.Commit();
+                }
+                catch (Exception)
+                {
+                    tran.Rollback();
+                    throw;
+                }
+            }
+        }
+        public static void InsertTacheProd(List<TacheProd> ListeTacheProd)
+        {
+            //Création d'une chaine de connection
+            string connectString = Properties.Settings.Default.ConnectionStringJobOverview;
+
+            //Création de string correspondant aux requêtes SQL
+
+            string queryString1 = @"INSERT jo.TacheProd(IdTache, DureePrevue, DureeRestanteEstimee,
+                                   CodeModule, CodeLogicieModule, NumeroVersion, CodeLogicielVersion)
+                                   SELECT IdTache, DureePrevue, DureeRestanteEstimee, CodeModule, 
+                                   CodeLogicielModule, NumeroVersion, CodeLogicielVersion FROM @TacheProd";
+
+            // On insert d'abord la tacheProd sous form de tache.
+            InsertTache(ListeTacheProd);
 
             //Création du paramètre de la requete SQL
             var param1 = new SqlParameter("@TacheProd", SqlDbType.Structured);
-            var param2 = new SqlParameter("@Tache", SqlDbType.Structured);
 
             //Appelle de la méthode gérant la création de la table intermédiaire
             DataTable tableProd = InsertTacheProdWithDatatable(ListeTacheProd);
             param1.TypeName = "TypeTableTacheProd";
             param1.Value = tableProd;
-
-            param2.TypeName = "TypeTableTache";
-            param2.Value = tableProd;
 
             using (var connect = new SqlConnection(connectString))
             {
@@ -223,10 +310,6 @@ namespace JobOverview
                 {
                     var command1 = new SqlCommand(queryString1, connect, tran);
                     command1.Parameters.Add(param1);
-                    command1.ExecuteNonQuery();
-
-                    var command2 = new SqlCommand(queryString2, connect, tran);
-                    command1.Parameters.Add(param2);
                     command1.ExecuteNonQuery();
 
                     tran.Commit();
@@ -244,19 +327,14 @@ namespace JobOverview
         /// </summary>
         /// <param name="ListeTacheProd"></param>
         /// <returns></returns>
-        private static DataTable InsertTacheProdWithDatatable(BindingList<TacheProd> ListeTacheProd)
+        private static DataTable InsertTacheProdWithDatatable(List<TacheProd> ListeTacheProd)
         {
             //Création d'une table mémoire
             DataTable table = new DataTable();
 
-            //Création des différentes colonnes
+            #region Création des différentes colonnes
             //Colonne IdTache
             var colNom = new DataColumn("IdTache", typeof(Guid));
-            colNom.AllowDBNull = false;
-            table.Columns.Add(colNom);
-
-            //Colonne Numero
-            colNom = new DataColumn("Numero", typeof(int));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
 
@@ -271,19 +349,23 @@ namespace JobOverview
             table.Columns.Add(colNom);
 
             //Colonne Module
-            colNom = new DataColumn("Module", typeof(string));
+            colNom = new DataColumn("CodeModule", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            colNom = new DataColumn("CodeLogicielModule", typeof(string));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
 
             //Colonne Version
-            colNom = new DataColumn("Version", typeof(string));
+            colNom = new DataColumn("NumeroVersion", typeof(string));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
 
-            //Colonne Logiciel
-            colNom = new DataColumn("Logiciel", typeof(string));
+            colNom = new DataColumn("CodeLogicielVersion", typeof(string));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
+            #endregion
 
             foreach (var p in ListeTacheProd)
             {
@@ -291,12 +373,12 @@ namespace JobOverview
                 //alors on écrit une valeur null dans la table de type SQL
                 DataRow ligne = table.NewRow();
                 ligne["IdTache"] = p.IdTache;
-                ligne["Numero"] = p.Numero;
                 ligne["DureePrevue"] = p.DureePrevue;
                 ligne["DureeRestanteEstimee"] = p.DureeRestanteEstimee;
-                ligne["Module"] = p.Module;
-                ligne["Version"] = p.Version;
-                ligne["Logiciel"] = p.Logiciel;
+                ligne["CodeModule"] = p.Module.CodeModule;
+                ligne["CodeLogicielModule"] = p.Logiciel.CodeLogiciel;
+                ligne["NumeroVersion"] = p.Version.NumeroVersion;
+                ligne["CodeLogicielVersion"] = p.Logiciel.CodeLogiciel;
 
                 //Ajout de ligne dans la table
                 table.Rows.Add(ligne);
@@ -308,13 +390,14 @@ namespace JobOverview
         /// </summary>
         /// <param name="ListeTacheProd"></param>
         /// <returns></returns>
-        private static DataTable InsertTacheWithDatatable(BindingList<TacheProd> ListeTacheProd)
+        private static DataTable InsertTacheWithDatatable(List<Tache> ListeTache)
         {
             //Création d'une table mémoire
             DataTable table = new DataTable();
 
-            //Création des différentes colonnes
-            //Colonne IdTache
+            #region Création des différentes colonnes
+
+            //Colone IdTache
             var colNom = new DataColumn("IdTache", typeof(Guid));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
@@ -330,7 +413,7 @@ namespace JobOverview
             table.Columns.Add(colNom);
 
             //Colonne Activité
-            colNom = new DataColumn("Activité", typeof(string));
+            colNom = new DataColumn("CodeActivite", typeof(string));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
 
@@ -338,11 +421,12 @@ namespace JobOverview
             colNom = new DataColumn("Login", typeof(string));
             colNom.AllowDBNull = false;
             table.Columns.Add(colNom);
+            #endregion
 
             //Colonne Description
             table.Columns.Add(new DataColumn("Description", typeof(string)));
 
-            foreach (var p in ListeTacheProd)
+            foreach (var p in ListeTache)
             {
                 //Création de chaque ligne de la table, si la valeur est null
                 //alors on écrit une valeur null dans la table de type SQL
@@ -350,7 +434,66 @@ namespace JobOverview
                 ligne["IdTache"] = p.IdTache;
                 ligne["Libelle"] = p.Libelle;
                 ligne["EstAnnexe"] = p.EstAnnexe;
-                ligne["Activite"] = p.Activite;
+                ligne["CodeActivite"] = p.Activite.CodeActivite;
+                ligne["Login"] = p.Login;
+                if (p.Description != null) ligne["Description"] = p.Description;
+                else ligne["Description"] = DBNull.Value;
+
+                //Ajout de ligne dans la table
+                table.Rows.Add(ligne);
+            }
+            return table;
+        }
+        /// <summary>
+        /// Création de la table temporaire @Tache
+        /// </summary>
+        /// <param name="ListeTacheProd"></param>
+        /// <returns></returns>
+        private static DataTable InsertTacheWithDatatable(List<TacheProd> ListeTache)
+        {
+            //Création d'une table mémoire
+            DataTable table = new DataTable();
+
+            #region Création des différentes colonnes
+
+            //Colone IdTache
+            var colNom = new DataColumn("IdTache", typeof(Guid));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Libelle
+            colNom = new DataColumn("Libelle", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne EstAnnexe
+            colNom = new DataColumn("EstAnnexe", typeof(bool));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Activité
+            colNom = new DataColumn("CodeActivite", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+
+            //Colonne Login
+            colNom = new DataColumn("Login", typeof(string));
+            colNom.AllowDBNull = false;
+            table.Columns.Add(colNom);
+            #endregion
+
+            //Colonne Description
+            table.Columns.Add(new DataColumn("Description", typeof(string)));
+
+            foreach (var p in ListeTache)
+            {
+                //Création de chaque ligne de la table, si la valeur est null
+                //alors on écrit une valeur null dans la table de type SQL
+                DataRow ligne = table.NewRow();
+                ligne["IdTache"] = p.IdTache;
+                ligne["Libelle"] = p.Libelle;
+                ligne["EstAnnexe"] = p.EstAnnexe;
+                ligne["CodeActivite"] = p.Activite.CodeActivite;
                 ligne["Login"] = p.Login;
                 if (p.Description != null) ligne["Description"] = p.Description;
                 else ligne["Description"] = DBNull.Value;

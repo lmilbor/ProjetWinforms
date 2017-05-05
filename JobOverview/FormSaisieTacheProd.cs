@@ -21,25 +21,8 @@ namespace JobOverview
         {
             InitializeComponent();
             mtbDureePrevue.TextChanged += MtbDureePrevue_TextChanged;
-            cbPersonne.SelectionChangeCommitted += CbPersonne_SelectionChangeCommitted;
         }
 
-        private void CbPersonne_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            Logiciel logiciel = TempData.ListeLogiciel.
-                Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).FirstOrDefault();
-            Version version = TempData.GetListeVersion(cbLogiciel.SelectedValue.ToString()).
-                Where(v => v.NumeroVersion == (float)cbVersion.SelectedValue).FirstOrDefault();
-            Module module = TempData.GetListeModule(cbLogiciel.SelectedValue.ToString()).
-                Where(m => m.CodeModule == (cbModule.SelectedValue).ToString()).FirstOrDefault();
-
-            if (TempData.GetListeTacheProd(cbPersonne.SelectedValue.ToString()).
-                    Where(tp => tp.Version.Equals(version) && tp.Logiciel.Equals(logiciel) && tp.Module.Equals(module)).Count() > 0)
-                // Si il existe déjà des tache de Production pour la personne, logiciel, module et version renseignée.
-                mtbNumero.Text = (TempData.GetListeTacheProd(cbPersonne.SelectedValue.ToString()).Select(tp => tp.Numero).Max() + 1).ToString(); // On remplit avec le plus au numero de tache + 1.
-            else
-                mtbNumero.Text = "1"; // Sinon on remplis avec 1
-        }
 
         private void MtbDureePrevue_TextChanged(object sender, EventArgs e)
         {
@@ -49,19 +32,15 @@ namespace JobOverview
         protected override void OnLoad(EventArgs e)
         {
 
-            //Alimentation des ComboBox
+            #region Alimentation des ComboBox
             //Combo Box Logiciel
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
             cbLogiciel.DataSource = TempData.ListeLogiciel.OrderBy(b => b.Nom).ToList();
-            Logiciel logiciel = TempData.ListeLogiciel.
-                Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).FirstOrDefault();
 
             //Combo Box Version
             cbVersion.DataSource = TempData.ListeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
             .ListeVersions.Select(b => b.NumeroVersion).OrderBy(b => b).ToList();
-            Version version = TempData.GetListeVersion(cbLogiciel.SelectedValue.ToString()).
-                Where(v => v.NumeroVersion == (float)cbVersion.SelectedValue).FirstOrDefault();
 
             //Combo Box Activité
             cbActivite.DisplayMember = "Libelle";
@@ -72,19 +51,12 @@ namespace JobOverview
             cbModule.DisplayMember = "Libellé";
             cbModule.ValueMember = "CodeModule";
             cbModule.DataSource = TempData.ListeModule.OrderBy(m => m.Libellé).ToList();
-            Module module = TempData.GetListeModule(cbLogiciel.SelectedValue.ToString()).
-                Where(m => m.CodeModule == (cbModule.SelectedValue).ToString()).FirstOrDefault();
 
             //Combo Box Personne
             cbPersonne.DisplayMember = "Nom";
             cbPersonne.ValueMember = "Login";
-            cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList();
-
-            if (TempData.GetListeTacheProd(cbPersonne.SelectedValue.ToString()).
-                    Where(tp => tp.Version.Equals(version) && tp.Logiciel.Equals(logiciel) && tp.Module.Equals(module)).Count() > 0) // Si il existe déjà des tache de Production pour la personne, logiciel, module et version renseignée.
-                mtbNumero.Text = (TempData.ListePersonne.Where(p => p.Login == cbPersonne.SelectedValue.ToString()).FirstOrDefault().ListeTacheProd.Select(tp => tp.Numero).Max() + 1).ToString();
-            else
-            mtbNumero.Text = "1";
+            cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList(); 
+            #endregion
             base.OnLoad(e);
         }
 
@@ -95,7 +67,7 @@ namespace JobOverview
 
                 // Initialisation des propriétées
                 TacheProd = new TacheProd();
-                TacheProd.IdTache = new Guid();
+                TacheProd.IdTache = Guid.NewGuid();
 
                 try
                 {
@@ -114,11 +86,6 @@ namespace JobOverview
 
                     if (!string.IsNullOrWhiteSpace(tbLibelle.Text))
                         TacheProd.Libelle = tbLibelle.Text;
-                    else
-                        throw new FormatException();
-
-                    if (!string.IsNullOrWhiteSpace(mtbNumero.Text))
-                        TacheProd.Numero = int.Parse(mtbNumero.Text);
                     else
                         throw new FormatException();
 
