@@ -12,5 +12,6 @@ namespace JobOverview
         static public BindingList<Personne> ListePersonne { get; set; }
         static public BindingList<Logiciel> ListeLogiciel { get; set; }
         static public BindingList<Activité> ListeActivite { get; set; }
+        static public BindingList<Module> ListeModule { get; set; }
     }
 }

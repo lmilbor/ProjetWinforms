@@ -20,6 +20,18 @@ namespace JobOverview
         public FormSaisieTacheProd()
         {
             InitializeComponent();
+            mtbDureePrevue.TextChanged += MtbDureePrevue_TextChanged;
+            cbPersonne.SelectionChangeCommitted += CbPersonne_SelectionChangeCommitted;
+        }
+
+        private void CbPersonne_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            mtbNumero.Text = (TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Select(tp => tp.Numero).Max() + 1).ToString();
+        }
+
+        private void MtbDureePrevue_TextChanged(object sender, EventArgs e)
+        {
+            lblresDureeRestante.Text = mtbDureePrevue.Text;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -38,19 +50,24 @@ namespace JobOverview
             //Combo Box Activité
             cbActivite.DisplayMember = "Libelle";
             cbActivite.ValueMember = "CodeActivite";
-            cbActivite.DataSource = TempData.ListeActivite.Where( a => !(a.EstAnnexe)).OrderBy(b => b.Libelle).ToList();
+            cbActivite.DataSource = TempData.ListeActivite.Where(a => !(a.EstAnnexe)).OrderBy(b => b.Libelle).ToList();
 
             //Combo Box Module
             cbModule.DisplayMember = "Libellé";
             cbModule.ValueMember = "CodeModule";
-            cbModule.DataSource = TempData.ListeLogiciel.Select( l => l.ListeModules).OrderBy(m => m.Select(l => l.Libellé)).ToList();
+            cbModule.DataSource = TempData.ListeModule.OrderBy(m => m.Libellé).ToList();
+            Module module = TempData.ListeModule.Where( m => m.CodeModule == (cbModule.SelectedValue).ToString()).FirstOrDefault();
 
             //Combo Box Personne
             cbPersonne.DisplayMember = "Nom";
             cbPersonne.ValueMember = "Login";
             cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList();
 
-            base.OnLoad(e); 
+            if ((TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Where( tp => tp.Version.Equals() && tp.Logiciel.Equals() && tp.Module.Equals(module)).Count != 0)) // Si il existe déjà des tache de Production pour la personne, logiciel, module et version renseignée.
+                mtbNumero.Text = (TempData.ListePersonne.Where(p => p.Login == cbPersonne.Text.ToString()).FirstOrDefault().ListeTacheProd.Select(tp => tp.Numero).Max() + 1).ToString();
+            else
+                mtbNumero.Text = "1";
+            base.OnLoad(e);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -70,13 +87,10 @@ namespace JobOverview
 
                     string tempString = mtbDureePrevue.Text.Replace(",", "");
                     if (!string.IsNullOrWhiteSpace(tempString))
+                    {
                         TacheProd.DureePrevue = float.Parse(mtbDureePrevue.Text);
-                    else
-                        throw new FormatException();
-
-                    tempString = mtbDureeRestante.Text.Replace(",", "");
-                    if (!string.IsNullOrWhiteSpace(tempString))
-                        TacheProd.DureeRestanteEstimee = float.Parse(mtbDureeRestante.Text);
+                        TacheProd.DureeRestanteEstimee = float.Parse(mtbDureePrevue.Text);
+                    }
                     else
                         throw new FormatException();
 
@@ -90,12 +104,11 @@ namespace JobOverview
                     else
                         throw new FormatException();
 
-                    Pers.Nom = cbPersonne.Text;
-                    Activite.CodeActivite = cbActivite.ValueMember;
-                    Activite.EstAnnexe = false;
-                    Module.CodeModule = cbModule.ValueMember;
-                    Version.NumeroVersion = float.Parse(cbVersion.Text);
-                    Logiciel.CodeLogiciel = cbLogiciel.ValueMember;
+                    TacheProd.Logiciel = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First();
+                    TacheProd.Module = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeModules.Where(m => m.CodeModule == cbModule.SelectedValue.ToString()).FirstOrDefault();
+                    TacheProd.Version = TempData.ListeLogiciel.Where(l => l.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First().ListeVersions.Where(v => v.NumeroVersion == ((float)cbVersion.SelectedValue)).FirstOrDefault();
+                    TacheProd.Login = TempData.ListePersonne.Where(p => p.Login == cbPersonne.SelectedValue.ToString()).Select(p => p.Login).FirstOrDefault();
+                    TacheProd.Activite = TempData.ListeActivite.Where(a => a.CodeActivite == cbActivite.SelectedValue.ToString()).FirstOrDefault();
                 }
                 catch (FormatException)
                 {

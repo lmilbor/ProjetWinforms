@@ -38,6 +38,7 @@ namespace JobOverview
                 TempData.ListeLogiciel = DALLogiciel.GetListLogiciel();
                 TempData.ListePersonne = DALTache.GetListePersonne();
                 TempData.ListeActivite = DALTache.GetListeActivite();
+                TempData.ListeModule = DALTache.GetListeModule();
             }
             base.OnLoad(e);
         }
