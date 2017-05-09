@@ -65,19 +65,22 @@ namespace JobOverview
             _listeNouvelleTacheProd = new List<TacheProd>();
 
             // Initialisation des combo box
+
+            //Combo Box Personne
+            cbPersonne.DisplayMember = "Nom";
+            cbPersonne.ValueMember = "Login";
+            cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).ToList();
+
             //Combo Box Logiciel
             cbLogiciel.DisplayMember = "Nom";
             cbLogiciel.ValueMember = "CodeLogiciel";
             cbLogiciel.DataSource = TempData.ListeLogiciel.OrderBy(b => b.Nom).ToList();
 
             //Combo Box Version
-            cbVersion.DataSource = TempData.ListeLogiciel.Where(a => a.CodeLogiciel == cbLogiciel.SelectedValue.ToString()).First()
-            .ListeVersions.Select(b => b.NumeroVersion).OrderBy(b => b).ToList();
-
-            //Combo Box Personne
-            cbPersonne.DisplayMember = "Nom";
-            cbPersonne.ValueMember = "Login";
-            cbPersonne.DataSource = TempData.ListePersonne.OrderBy(b => b.Nom).Distinct().ToList();
+            cbVersion.DisplayMember = "Millesime";
+            cbVersion.ValueMember = "NumeroVersion";
+            cbVersion.DataSource = TempData.GetListeVersion(cbLogiciel.SelectedValue.ToString())
+            .OrderBy(v => v.Millesime).ToList();
 
             MiseAJourForm();
 
@@ -90,11 +93,10 @@ namespace JobOverview
         public void MiseAJourForm()
         {
             // Remploi la data grid view des taches de production
-            dgvTacheProd.DataSource = TempData.ListePersonne.
-                                               Where(a => a.Login == cbPersonne.SelectedValue.ToString()).First().
-                                               ListeTacheProd.
-                                               Where(b => (b.Logiciel.CodeLogiciel == cbLogiciel.SelectedValue.ToString()) && (b.Version.NumeroVersion == (float)cbVersion.SelectedValue)).ToList();
-
+            dgvTacheProd.DataSource = TempData.GetListeTacheProd(cbPersonne.SelectedValue.ToString())
+                                               .Where(tp => (tp.Logiciel.CodeLogiciel == cbLogiciel.SelectedValue.ToString())
+                                               && (tp.Version.NumeroVersion == (float)cbVersion.SelectedValue)).ToList();
+                                               
             // Rend invisible les colonnes non souhaitées
             dgvTacheProd.Columns["DureePrevue"].Visible = false;
             dgvTacheProd.Columns["DureeRestanteEstimee"].Visible = false;

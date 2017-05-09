@@ -25,7 +25,7 @@ namespace JobOverview
                 {
                     ChaineDeConnexion = tbConnection.Text;
                     Properties.Settings.Default.ConnectionStringJobOverview = tbConnection.Text;
-
+                    Properties.Settings.Default.Save();
                     base.OnClosing(e);
                 }
                 else

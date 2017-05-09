@@ -23,7 +23,7 @@ namespace JobOverview
             // Création d'un string pour stocker la requete SQL
             string queryString = @"Select P.Login, P.Nom, P.Prenom, T.IdTache, T.Libelle, T.Annexe As EstAnnexe, A.Libelle As LibelleActivite, 
                                    T.Description, TP.Numero, TP.DureePrevue, TP.DureeRestanteEstimee, 
-                                   M.Libelle As Module, L.Nom As Logiciel, V.NumeroVersion
+                                   M.Libelle As Module, L.CodeLogiciel As Logiciel, V.NumeroVersion
                                    from jo.Personne P
                                    inner join jo.Tache T on T.Login = P.Login
                                    left outer join jo.TacheProd TP on TP.IdTache = T.IdTache
@@ -96,6 +96,7 @@ namespace JobOverview
                     tacheProd.Activite = new Activité();
                     tacheProd.Logiciel = new Logiciel();
                     tacheProd.Module = new Module();
+                    tacheProd.Version = new Version();
 
                     // On remplis les valeurs avec celles déjà obtenue en tant que Tache.
                     tacheProd.IdTache = tache.IdTache;
@@ -107,8 +108,8 @@ namespace JobOverview
                     tacheProd.Numero = (int)reader["Numero"];
                     tacheProd.DureePrevue = (float)reader["DureePrevue"];
                     tacheProd.DureeRestanteEstimee = (float)reader["DureeRestanteEstimee"];
-                    tacheProd.Version.NumeroVersion = (float)reader["Version"];
-                    tacheProd.Logiciel.Nom = (string)reader["Logiciel"];
+                    tacheProd.Version.NumeroVersion = (float)reader["NumeroVersion"];
+                    tacheProd.Logiciel.CodeLogiciel = (string)reader["Logiciel"];
                     tacheProd.Module.Libellé = (string)reader["Module"];
 
                     personne.ListeTacheProd.Add(tacheProd);

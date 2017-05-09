@@ -31,3 +31,6 @@ D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Deb
 D:\Projet\Projet\ProjetWinForm\ProjetWinforms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormVerifTemps.resources
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormSaisieTacheAnnexe.resources
 D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormVerifTemps.resources
+D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\JobOverview.FormLogiciel.en.resources
+D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\bin\Debug\en\JobOverview.resources.dll
+D:\Projets\ProjetWinForms\ProjetWinforms\JobOverview\obj\Debug\en\JobOverview.resources.dll

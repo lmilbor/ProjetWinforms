@@ -14,7 +14,6 @@ namespace JobOverview
             InitializeComponent();
             ChildForms = new Dictionary<string, Form>();
 
-            // TODO : Branchement des menus
             menuLogiciel.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormLogiciel");
             menuTacheProd.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormTacheProd");
             menuTachesAnnexes.Click += (object sender, EventArgs e) => ShowChild("JobOverview.FormSaisieTacheAnnexe");
@@ -31,6 +30,20 @@ namespace JobOverview
                     {
                         form.ShowDialog();
                     } while (string.IsNullOrWhiteSpace(form.ChaineDeConnexion) && !(form.DialogResult.Equals(DialogResult.Cancel)));
+                }
+            }
+            else
+            {
+                var mb = MessageBox.Show("Voulez-vous entrer une nouvelle chaîne de connexion ?", "Connexion", MessageBoxButtons.YesNo);
+                if (mb == DialogResult.Yes)
+                {
+                    using (var form = new FormConnexion())
+                    {
+                        do
+                        {
+                            form.ShowDialog();
+                        } while (string.IsNullOrWhiteSpace(form.ChaineDeConnexion) && !(form.DialogResult.Equals(DialogResult.Cancel)));
+                    }
                 }
             }
             if (!(string.IsNullOrWhiteSpace(Properties.Settings.Default.ConnectionStringJobOverview)))

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogiciel));
             this.cbLogiciel = new System.Windows.Forms.ComboBox();
             this.btnNewVersion = new System.Windows.Forms.Button();
             this.btnSupVersion = new System.Windows.Forms.Button();
@@ -43,98 +44,59 @@
             // 
             // cbLogiciel
             // 
+            resources.ApplyResources(this.cbLogiciel, "cbLogiciel");
             this.cbLogiciel.FormattingEnabled = true;
-            this.cbLogiciel.Location = new System.Drawing.Point(8, 31);
             this.cbLogiciel.Name = "cbLogiciel";
-            this.cbLogiciel.Size = new System.Drawing.Size(121, 21);
-            this.cbLogiciel.TabIndex = 0;
             // 
             // btnNewVersion
             // 
-            this.btnNewVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewVersion.Location = new System.Drawing.Point(8, 58);
+            resources.ApplyResources(this.btnNewVersion, "btnNewVersion");
             this.btnNewVersion.Name = "btnNewVersion";
-            this.btnNewVersion.Size = new System.Drawing.Size(121, 36);
-            this.btnNewVersion.TabIndex = 1;
-            this.btnNewVersion.Text = "Nouvelle Version";
             this.btnNewVersion.UseVisualStyleBackColor = true;
             // 
             // btnSupVersion
             // 
-            this.btnSupVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSupVersion.Location = new System.Drawing.Point(8, 100);
+            resources.ApplyResources(this.btnSupVersion, "btnSupVersion");
             this.btnSupVersion.Name = "btnSupVersion";
-            this.btnSupVersion.Size = new System.Drawing.Size(121, 39);
-            this.btnSupVersion.TabIndex = 2;
-            this.btnSupVersion.Text = "Supprimer Version";
             this.btnSupVersion.UseVisualStyleBackColor = true;
             // 
             // btnEnregister
             // 
-            this.btnEnregister.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnregister.Location = new System.Drawing.Point(8, 145);
+            resources.ApplyResources(this.btnEnregister, "btnEnregister");
             this.btnEnregister.Name = "btnEnregister";
-            this.btnEnregister.Size = new System.Drawing.Size(121, 39);
-            this.btnEnregister.TabIndex = 3;
-            this.btnEnregister.Text = "Enregistrer";
             this.btnEnregister.UseVisualStyleBackColor = true;
             // 
             // lblLogiciel
             // 
-            this.lblLogiciel.AutoSize = true;
-            this.lblLogiciel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLogiciel.Location = new System.Drawing.Point(5, 9);
+            resources.ApplyResources(this.lblLogiciel, "lblLogiciel");
             this.lblLogiciel.Name = "lblLogiciel";
-            this.lblLogiciel.Size = new System.Drawing.Size(133, 17);
-            this.lblLogiciel.TabIndex = 4;
-            this.lblLogiciel.Text = "Selection de logiciel";
             // 
             // dgvVersion
             // 
-            this.dgvVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            resources.ApplyResources(this.dgvVersion, "dgvVersion");
             this.dgvVersion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVersion.Location = new System.Drawing.Point(150, 31);
             this.dgvVersion.Name = "dgvVersion";
-            this.dgvVersion.Size = new System.Drawing.Size(551, 294);
-            this.dgvVersion.TabIndex = 5;
             // 
             // lblVersion
             // 
-            this.lblVersion.AutoSize = true;
-            this.lblVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVersion.Location = new System.Drawing.Point(147, 9);
+            resources.ApplyResources(this.lblVersion, "lblVersion");
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(63, 17);
-            this.lblVersion.TabIndex = 7;
-            this.lblVersion.Text = "Versions";
             // 
             // lblModule
             // 
-            this.lblModule.AutoSize = true;
-            this.lblModule.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblModule.Location = new System.Drawing.Point(704, 11);
+            resources.ApplyResources(this.lblModule, "lblModule");
             this.lblModule.Name = "lblModule";
-            this.lblModule.Size = new System.Drawing.Size(61, 17);
-            this.lblModule.TabIndex = 8;
-            this.lblModule.Text = "Modules";
             // 
             // dgvModule
             // 
-            this.dgvModule.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            resources.ApplyResources(this.dgvModule, "dgvModule");
             this.dgvModule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvModule.Location = new System.Drawing.Point(707, 31);
             this.dgvModule.Name = "dgvModule";
-            this.dgvModule.Size = new System.Drawing.Size(207, 294);
-            this.dgvModule.TabIndex = 9;
             // 
             // FormLogiciel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 329);
             this.Controls.Add(this.dgvModule);
             this.Controls.Add(this.lblModule);
             this.Controls.Add(this.lblVersion);
@@ -145,8 +107,6 @@
             this.Controls.Add(this.btnNewVersion);
             this.Controls.Add(this.cbLogiciel);
             this.Name = "FormLogiciel";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormGestionLogiciel";
             ((System.ComponentModel.ISupportInitialize)(this.dgvVersion)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvModule)).EndInit();
             this.ResumeLayout(false);
