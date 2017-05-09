@@ -14,6 +14,10 @@ namespace UnitTestJobOverview
         {
             FormConnexion.ConnectionTestUnitaire(@"Data Source=BGUILLAUMI17-DE\IP08R2;Initial Catalog=WinformsJobOverview;Integrated Security=True");
         }
+
+        /// <summary>
+        /// Vérification que la liste de personne soit bien alimenté.
+        /// </summary>
         [TestMethod]
         public void TestMethodeGetListePersonne()
         {
@@ -30,6 +34,9 @@ namespace UnitTestJobOverview
             Assert.AreEqual(nomTest, nom);
         }
 
+        /// <summary>
+        /// Vérification que la liste des activités soit bien alimenté.
+        /// </summary>
         [TestMethod]
         public void TestMethodeGetListeActivite()
         {
@@ -46,6 +53,9 @@ namespace UnitTestJobOverview
             Assert.AreEqual(libelleTest, libelle);
         }
 
+        /// <summary>
+        /// Vérification que la liste des Modules soit bien alimenté.
+        /// </summary>
         [TestMethod]
         public void TestMethodeGetListeModule()
         {
@@ -62,7 +72,9 @@ namespace UnitTestJobOverview
             Assert.AreEqual(libelleTest, libelle);
         }
 
-
+        /// <summary>
+        /// Vérification que la liste des Logiciels soit bien alimenté.
+        /// </summary>
         [TestMethod]
         public void TestMethodeGetListeLogiciel()
         {
